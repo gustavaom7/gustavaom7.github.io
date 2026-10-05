@@ -92,7 +92,8 @@ test.describe('portfolio', () => {
     const diffs = await page.evaluate(() => {
       const dict = (window as unknown as { __I18N__: Record<string, Record<string, string>> }).__I18N__;
       // Digits glued to a letter (a11y) are words, not numbers.
-      const nums = (t: string) => (t.match(/(?<![A-Za-z\d])\d+(?:[.,]\d+)?/g) ?? []).sort().join(' ');
+      // PT writes decimals with a comma (2,5) where EN uses a dot (2.5): compare them as the same number.
+      const nums = (t: string) => (t.match(/(?<![A-Za-z\d])\d+(?:[.,]\d+)?/g) ?? []).map((n) => n.replace(',', '.')).sort().join(' ');
       return Object.keys(dict.en).filter((k) => !/\.when$/.test(k) && nums(dict.en[k]) !== nums(dict.pt[k]))
         .map((k) => `${k}: "${nums(dict.en[k])}" vs "${nums(dict.pt[k])}"`);
     });

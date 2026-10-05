@@ -416,9 +416,7 @@
     <div class="wrap">
       <ul>
         <li><strong data-i18n="impact.1n">9+ years</strong><span data-i18n="impact.1">in QA, since 2017</span></li>
-        <!-- TODO(Gustavo): average time to write the test cases for one feature, before and after the AI workflow
-             (e.g. "4h → 25min"). When you have it, show it here like the "3h → 30min" item and keep "up to 90%" in the text. -->
-        <li><strong data-i18n="impact.2n">up to 90%</strong><span data-i18n="impact.2">less time writing test cases, with AI agents and Playwright MCP</span></li>
+        <li><strong>2h → 5min</strong><span data-i18n="impact.2">to write the test cases for a feature, with AI agents and Playwright MCP</span></li>
         <li><strong>3h → 30min</strong><span data-i18n="impact.3">daily application checkups after automating the E2E regression</span></li>
         <li><strong>−50%</strong><span data-i18n="impact.4">manual mobile testing cycles per release with Maestro and Appium</span></li>
       </ul>
@@ -473,8 +471,8 @@
             <h3 id="feat-title">Playwright &amp; AI Quality Architecture</h3>
             <ul class="tags"><li>Playwright</li><li>TypeScript</li><li>Playwright MCP</li><li>Claude Code</li><li>k6</li><li>axe-core</li></ul>
             <p data-i18n="feat.desc">A production-style E2E suite against SauceDemo, extended with an AI-driven workflow: agents explore pages through Playwright MCP and draft Page Objects and specs, and a triage script turns failures into Jira-ready bug reports. Cross-browser, mobile emulation, accessibility, network resilience, performance budgets and Slack reporting.</p>
-            <!-- TODO(Gustavo): add to this line how long a full CI run takes (min) and how many recent runs had 0 flaky tests. -->
-            <p class="result" data-i18n="feat.result">11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation</p>
+            <!-- Numbers from the all-browsers CI run on Oct 5, 2026 (124 passed in 2.4 min). Update when the suite changes. -->
+            <p class="result" data-i18n="feat.result">124 tests in 11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation · full run in about 2.5 min</p>
           </div>
           <figure class="media">
             <!-- TODO(Gustavo): record assets/projects/playwright-ai-quality-architecture.gif (see the alt text for what it should show). -->
@@ -512,16 +510,14 @@
           <h3 id="cypress-title">Cypress hybrid suite (UI + API)</h3>
           <ul class="tags"><li>Cypress</li><li>JavaScript</li><li>k6</li><li>Lighthouse</li></ul>
           <p data-i18n="cypress.desc">UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.</p>
-          <!-- TODO(Gustavo): add to this line how long the regression matrix takes (min) and how many recent runs had 0 flaky tests. -->
-          <p class="result" data-i18n="cypress.result">11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel</p>
+          <!-- Duration from the last three CI runs on main (Oct 1, 2026: 3.9–4.5 min). -->
+          <p class="result" data-i18n="cypress.result">11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel · full CI in about 4.5 min</p>
           <figure class="media">
             <!-- TODO(Gustavo): record assets/projects/cypress-hybrid-suite.gif (see the alt text for what it should show). -->
             <img src="assets/projects/cypress-hybrid-suite.gif" loading="lazy" width="1280" height="720" alt="Screen recording: the Cypress runner going through the UI and API specs, with the Mochawesome report at the end" data-i18n-alt="media.cypress.alt" onerror="this.parentNode.classList.add('is-missing')">
             <figcaption class="media-fallback" data-i18n="media.soon">Demo recording coming soon</figcaption>
           </figure>
-          <!-- TODO(Gustavo): after renaming the repo to cypress-hybrid-suite on GitHub, change this href to
-               https://github.com/gustavaom7/cypress-hybrid-suite (the current URL keeps working through GitHub's redirect). -->
-          <a class="link" href="https://github.com/gustavaom7/cypress-e2e-custom-commands" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
+          <a class="link" href="https://github.com/gustavaom7/cypress-hybrid-suite" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
         </article>
       </div>
 
@@ -555,7 +551,6 @@
         </div>
         <div>
           <h3 data-i18n="case.problem.t">Problem</h3>
-          <!-- TODO(Gustavo): confirm this sentence and add what made it painful (how many test cases per feature, how long it took, what it delayed). -->
           <p data-i18n="case.problem.d">Test cases were written by hand for every new feature, on web, mobile web and native app.</p>
         </div>
         <div>
@@ -564,8 +559,8 @@
         </div>
         <div>
           <h3 data-i18n="case.result.t">Result</h3>
-          <p data-i18n="case.result.d">Up to 90% less time writing test cases.</p>
-          <!-- TODO(Gustavo): before → after time per feature (same numbers as the impact strip), and any quality signal you can share (e.g. bugs caught before release). -->
+          <p data-i18n="case.result.d">Writing the test cases for a feature went from 2 hours to 5 minutes.</p>
+          <!-- TODO(Gustavo), optional: a quality signal you can share (e.g. bugs caught before release). -->
         </div>
         <!-- TODO(Gustavo): write 1–2 sentences on what you'd improve next, put them in 'case.next.d' (EN and PT)
              and remove the `hidden` attribute below to show this block. -->
@@ -614,7 +609,7 @@
           <p class="when"><span data-i18n="remote">Remote</span> · <span data-i18n="exp.1.when">Apr 2026 – Present</span><span class="now" data-i18n="current">Current</span></p>
           <ul class="bullets">
             <li data-i18n="exp.1.b1">Owns quality end to end for Estrela Bet and Vupi across web, mobile web and native app.</li>
-            <li data-i18n="exp.1.b2">Cut the time spent writing test cases by up to 90% with an AI test generation workflow on Playwright MCP.</li>
+            <li data-i18n="exp.1.b2">Cut the time to write the test cases for a feature from 2 hours to 5 minutes with an AI test generation workflow on Playwright MCP.</li>
             <li data-i18n="exp.1.b3">Cut daily checkups from 3 hours to under 30 minutes by automating the E2E regression across web and mobile.</li>
             <li data-i18n="exp.1.b4">Built a k6 pipeline that measures page-load metrics after every deploy and posts results to Slack.</li>
           </ul>
@@ -689,9 +684,9 @@
       'hero.meta': 'Três Pontas, Brazil · Remote · English (advanced)',
       terminalLabel: 'Terminal demo: npx playwright test runs 52 tests, 51 pass and 1 fails (inventory sort by price, low to high). npm run triage merges the failure across chromium, firefox and webkit, classifies it as functional with high severity, and writes a Jira-ready bug report: Sort by price returns wrong order.',
       replay: 'replay',
-      'impact.1n': '9+ years', 'impact.2n': 'up to 90%',
+      'impact.1n': '9+ years',
       'impact.1': 'in QA, since 2017',
-      'impact.2': 'less time writing test cases, with AI agents and Playwright MCP',
+      'impact.2': 'to write the test cases for a feature, with AI agents and Playwright MCP',
       'impact.3': 'daily application checkups after automating the E2E regression',
       'impact.4': 'manual mobile testing cycles per release with Maestro and Appium',
       'about.title': 'Quality is a pipeline, not a phase.',
@@ -720,9 +715,9 @@
       'maestro.desc': 'Mobile automation with Maestro, a CI pipeline on GitHub Actions with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.',
       'cypress.desc': 'UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.',
       more: 'More repos', 'more.api': 'contract and security tests',
-      'feat.result': '11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation',
+      'feat.result': '124 tests in 11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation · full run in about 2.5 min',
       'maestro.result': '10 Maestro flows on an Android emulator in CI',
-      'cypress.result': '11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel',
+      'cypress.result': '11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel · full CI in about 4.5 min',
       'media.soon': 'Demo recording coming soon',
       'media.pw.alt': 'Screen recording: the Playwright suite running in the terminal, then the triage script turning a failure into a Jira-ready bug report',
       'media.maestro.alt': 'Screen recording: the AI generator turning a plain-language scenario into a Maestro flow, then the flow running on an Android emulator',
@@ -736,7 +731,7 @@
       'case.context.t': 'Context', 'case.context.d': 'I own quality end to end for two betting brands, across web, mobile web and native app: sportsbook, live betting and casino flows.',
       'case.problem.t': 'Problem', 'case.problem.d': 'Test cases were written by hand for every new feature, on web, mobile web and native app.',
       'case.approach.t': 'Approach', 'case.approach.d': "Claude Code skills turn a feature description into test cases and acceptance criteria. Agents map the pages through Playwright MCP and draft the Playwright tests. A human reviews everything before merge, and anything the agent can't confirm is marked test.fixme instead of guessed.",
-      'case.result.t': 'Result', 'case.result.d': 'Up to 90% less time writing test cases.',
+      'case.result.t': 'Result', 'case.result.d': 'Writing the test cases for a feature went from 2 hours to 5 minutes.',
       'case.next.t': "What I'd do next", 'case.next.d': 'TODO(Gustavo): next steps to be written.',
       'ai.title': 'How I put AI to work in QA', 'ai.intro': 'Not a prompt collection. A pipeline I use every day, with a human reviewing at the end.',
       'ai.1': 'Feature description', 'ai.2': 'Test cases and acceptance criteria', 'ai.2s': 'Claude Code skill', 'ai.3': 'Playwright spec', 'ai.3s': 'via MCP',
@@ -747,7 +742,7 @@
       'exp.1.when': 'Apr 2026 – Present', 'exp.2.when': 'Sep 2025 – May 2026', 'exp.3.when': 'Mar 2023 – Sep 2025', 'exp.4.when': 'May 2022 – Mar 2023',
       'exp.5.when': 'Jan 2022 – May 2022', 'exp.6.when': 'Sep 2020 – Jan 2022', 'exp.7.when': 'Jun 2017 – Jun 2019',
       'exp.1.b1': 'Owns quality end to end for Estrela Bet and Vupi across web, mobile web and native app.',
-      'exp.1.b2': 'Cut the time spent writing test cases by up to 90% with an AI test generation workflow on Playwright MCP.',
+      'exp.1.b2': 'Cut the time to write the test cases for a feature from 2 hours to 5 minutes with an AI test generation workflow on Playwright MCP.',
       'exp.1.b3': 'Cut daily checkups from 3 hours to under 30 minutes by automating the E2E regression across web and mobile.',
       'exp.1.b4': 'Built a k6 pipeline that measures page-load metrics after every deploy and posts results to Slack.',
       'exp.2.b1': 'First QA hired: built the QA process and cut manual mobile testing cycles by 50% per release with Maestro and Appium.',
@@ -771,9 +766,9 @@
       'hero.meta': 'Três Pontas, MG · Remoto · Inglês avançado',
       terminalLabel: 'Demonstração de terminal: npx playwright test roda 52 testes, 51 passam e 1 falha (ordenação do inventário por preço, do menor para o maior). npm run triage agrupa a falha entre chromium, firefox e webkit, classifica como funcional com severidade alta e escreve um bug report pronto pro Jira: Sort by price returns wrong order.',
       replay: 'replay',
-      'impact.1n': '9+ anos', 'impact.2n': 'até 90%',
+      'impact.1n': '9+ anos',
       'impact.1': 'em QA, desde 2017',
-      'impact.2': 'menos tempo escrevendo casos de teste, com agentes de IA e Playwright MCP',
+      'impact.2': 'para escrever os casos de teste de uma feature, com agentes de IA e Playwright MCP',
       'impact.3': 'checkup diário da aplicação depois de automatizar a regressão E2E',
       'impact.4': 'ciclos de teste manual mobile por release com Maestro e Appium',
       'about.title': 'Qualidade é pipeline, não fase.',
@@ -802,9 +797,9 @@
       'maestro.desc': 'Automação mobile com Maestro, pipeline de CI no GitHub Actions com reporte no Slack, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a Claude API. Os flows gerados são revisados e rodados antes de cada commit.',
       'cypress.desc': 'Automação de UI e API com Page Objects, cy.session, testes de contrato, mock de rede, regressão visual e perfis de carga com k6, com matriz de regressão paralela no GitHub Actions.',
       more: 'Mais repos', 'more.api': 'testes de contrato e de segurança',
-      'feat.result': '11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12',
+      'feat.result': '124 testes em 11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12 · execução completa em cerca de 2,5 min',
       'maestro.result': '10 flows Maestro num emulador Android no CI',
-      'cypress.result': '11 arquivos de spec entre UI, API, visual e Lighthouse · smoke em viewports desktop e mobile em paralelo',
+      'cypress.result': '11 arquivos de spec entre UI, API, visual e Lighthouse · smoke em viewports desktop e mobile em paralelo · CI completo em cerca de 4,5 min',
       'media.soon': 'Gravação da demo em breve',
       'media.pw.alt': 'Gravação de tela: a suíte Playwright rodando no terminal e depois o script de triagem transformando uma falha num bug report pronto pro Jira',
       'media.maestro.alt': 'Gravação de tela: o gerador de IA transformando um cenário em linguagem natural num flow Maestro e depois o flow rodando num emulador Android',
@@ -818,7 +813,7 @@
       'case.context.t': 'Contexto', 'case.context.d': 'Sou responsável pela qualidade de ponta a ponta de duas marcas de apostas, em web, mobile web e app nativo: fluxos de sportsbook, apostas ao vivo e cassino.',
       'case.problem.t': 'Problema', 'case.problem.d': 'Os casos de teste eram escritos à mão para cada feature nova, em web, mobile web e app nativo.',
       'case.approach.t': 'Abordagem', 'case.approach.d': 'Skills do Claude Code transformam uma descrição de feature em casos de teste e critérios de aceite. Agentes mapeiam as páginas via Playwright MCP e rascunham os testes Playwright. Uma pessoa revisa tudo antes do merge, e o que o agente não consegue confirmar vira test.fixme em vez de chute.',
-      'case.result.t': 'Resultado', 'case.result.d': 'Até 90% menos tempo escrevendo casos de teste.',
+      'case.result.t': 'Resultado', 'case.result.d': 'Escrever os casos de teste de uma feature passou de 2 horas para 5 minutos.',
       'case.next.t': 'O que eu faria em seguida', 'case.next.d': 'TODO(Gustavo): próximos passos a escrever.',
       'ai.title': 'Como eu coloco a IA pra trabalhar no QA', 'ai.intro': 'Não é coleção de prompt. É uma pipeline que eu uso todo dia, com revisão humana no fim.',
       'ai.1': 'Descrição da feature', 'ai.2': 'Casos de teste e critérios de aceite', 'ai.2s': 'skill do Claude Code', 'ai.3': 'Spec Playwright', 'ai.3s': 'via MCP',
@@ -829,7 +824,7 @@
       'exp.1.when': 'abr 2026 – atual', 'exp.2.when': 'set 2025 – mai 2026', 'exp.3.when': 'mar 2023 – set 2025', 'exp.4.when': 'mai 2022 – mar 2023',
       'exp.5.when': 'jan 2022 – mai 2022', 'exp.6.when': 'set 2020 – jan 2022', 'exp.7.when': 'jun 2017 – jun 2019',
       'exp.1.b1': 'Responsável pela qualidade de ponta a ponta da Estrela Bet e da Vupi em web, mobile web e app nativo.',
-      'exp.1.b2': 'Reduziu em até 90% o tempo gasto escrevendo casos de teste com um fluxo de geração por IA no Playwright MCP.',
+      'exp.1.b2': 'Reduziu de 2 horas para 5 minutos o tempo de escrita dos casos de teste de uma feature, com um fluxo de geração por IA no Playwright MCP.',
       'exp.1.b3': 'Reduziu o checkup diário de 3 horas para menos de 30 minutos automatizando a regressão E2E em web e mobile.',
       'exp.1.b4': 'Criou uma pipeline k6 que mede métricas de carregamento a cada deploy e publica no Slack.',
       'exp.2.b1': 'Primeiro QA contratado: criou o processo de QA e reduziu em 50% os ciclos de teste manual mobile por release com Maestro e Appium.',
