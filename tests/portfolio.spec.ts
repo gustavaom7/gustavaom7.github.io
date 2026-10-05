@@ -1,17 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 
 const CV_PATH = '/GustavoMesquita-QAEngineer-CV.pdf';
 const EMAIL = 'gustavogmmg@hotmail.com';
-
-// Project GIFs that are not committed yet may 404 (the card shows a fallback).
-// Once a file exists in assets/projects/, it must load like any other asset.
-function isPendingMedia(url: string) {
-  const { pathname } = new URL(url);
-  return /^\/assets\/projects\/[\w-]+\.gif$/.test(pathname) && !existsSync(join(__dirname, '..', pathname));
-}
+const SECTION_ORDER = ['about', 'projects', 'case-study', 'experience', 'skills', 'contact'];
 
 async function setLang(page: Page, lang: 'en' | 'pt') {
   await page.getByRole('button', { name: lang.toUpperCase(), exact: true }).click();
@@ -21,12 +13,10 @@ test.describe('portfolio', () => {
   test('loads with no console errors and no failed requests', async ({ page }) => {
     const errors: string[] = [];
     const failed: string[] = [];
-    page.on('console', (m) => {
-      if (m.type() === 'error' && !(m.location().url && isPendingMedia(m.location().url))) errors.push(`${m.text()} (${m.location().url})`);
-    });
+    page.on('console', (m) => { if (m.type() === 'error') errors.push(`${m.text()} (${m.location().url})`); });
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('requestfailed', (r) => failed.push(`${r.url()} ${r.failure()?.errorText}`));
-    page.on('response', (r) => { if (r.status() >= 400 && !isPendingMedia(r.url())) failed.push(`${r.url()} ${r.status()}`); });
+    page.on('response', (r) => { if (r.status() >= 400) failed.push(`${r.url()} ${r.status()}`); });
 
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -70,15 +60,16 @@ test.describe('portfolio', () => {
         }
       });
       ['theme.toLight', 'theme.toDark', 'copied', 'copyFail'].forEach((k) => keys.add(k));
-      const skills = (window as unknown as { __SKILLS__: Record<string, Record<string, (string | Record<string, string>)[]>> }).__SKILLS__;
-      for (const tier of Object.keys(skills)) {
-        keys.add(`skills.${tier}`);
-        for (const cat of Object.keys(skills[tier])) {
-          keys.add(`skills.${cat}`);
-          skills[tier][cat].forEach((item, i) => {
-            if (typeof item !== 'string') ['en', 'pt'].forEach((l) => { if (!item[l]) keys.add(`__missing ${tier}.${cat}[${i}].${l}`); });
-          });
-        }
+      type Item = string | { key?: string; en?: string; pt?: string };
+      const rows = (window as unknown as { __SKILLS__: { cat: string; primary?: Item[]; also?: Item[] }[] }).__SKILLS__;
+      keys.add('skills.primary').add('skills.also');
+      for (const row of rows) {
+        keys.add(`skills.${row.cat}`);
+        [...(row.primary ?? []), ...(row.also ?? [])].forEach((item, i) => {
+          if (typeof item === 'string') return;
+          if (item.key) keys.add(item.key);
+          else ['en', 'pt'].forEach((l) => { if (!item[l as 'en' | 'pt']) keys.add(`__missing ${row.cat}[${i}].${l}`); });
+        });
       }
       const missingKeys = [...keys].flatMap((k) => ['en', 'pt'].filter((l) => !dict[l][k]).map((l) => `${l}:${k}`));
       const onlyIn = (a: string, b: string) => Object.keys(dict[a]).filter((k) => !(k in dict[b])).map((k) => `only ${a}:${k}`);
@@ -175,42 +166,105 @@ test.describe('portfolio', () => {
     await expect(page.getByRole('navigation').getByRole('link', { name: 'Case study' })).toHaveAttribute('href', '#case-study');
   });
 
-  test('skills are split into Daily use and Have used, in both languages', async ({ page }) => {
+  test('sections and the menu follow the same order, with one entry for the case study', async ({ page }) => {
     await page.goto('/');
-    const daily = page.locator('.tier-daily');
-    const used = page.locator('.tier-used');
-    await expect(daily.getByRole('heading')).toHaveText('Daily use');
-    await expect(used.getByRole('heading')).toHaveText('Have used');
-    for (const s of ['Playwright', 'TypeScript', 'Maestro', 'Claude Code', 'Playwright MCP', 'Postman', 'Proxyman', 'GitHub Actions', 'Jira']) {
-      await expect(daily.getByText(s, { exact: true })).toBeVisible();
-    }
-    await expect(used.getByText('Python (working knowledge)')).toBeVisible();
-    await expect(used.getByText('Java (basic)')).toBeVisible();
-    await setLang(page, 'pt');
-    await expect(daily.getByRole('heading')).toHaveText('Uso diário');
-    await expect(used.getByText('Python (conhecimento prático)')).toBeVisible();
-    await expect(used.getByText('Java (básico)')).toBeVisible();
+    const sections = await page.locator('main > section[id]').evaluateAll((els) => els.map((e) => e.id));
+    expect(sections).toEqual(SECTION_ORDER);
+    const navHrefs = await page.getByRole('navigation').getByRole('link').evaluateAll((els) => els.map((a) => a.getAttribute('href')));
+    expect(navHrefs).toEqual(SECTION_ORDER.map((id) => `#${id}`));
+    await expect(page.locator('.brand')).toHaveText('Gustavo Mesquita');
   });
 
-  test('each project card has lazy media with alt text, or a fallback when the GIF is missing', async ({ page }) => {
+  test('the old #ai anchor lands on the case study', async ({ page }) => {
+    await page.goto('/#ai');
+    await expect(page.locator('#case-study #ai')).toHaveCount(1);
+    await expect(page.getByRole('heading', { name: 'Case study: AI in the QA flow' })).toBeInViewport();
+  });
+
+  test('the case study tells the AI flow once', async ({ page }) => {
     await page.goto('/');
-    const figures = page.locator('#projects .media');
-    await expect(figures).toHaveCount(3);
-    for (const fig of await figures.all()) {
-      const img = fig.locator('img');
-      await expect(img).toHaveAttribute('loading', 'lazy');
-      await expect(img).toHaveAttribute('src', /^assets\/projects\/[\w-]+\.gif$/);
-      expect((await img.getAttribute('alt'))?.length).toBeGreaterThan(20);
-      await fig.scrollIntoViewIfNeeded();
-      const src = (await img.getAttribute('src'))!;
-      if (existsSync(join(__dirname, '..', src))) {
-        await expect.poll(() => img.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0)).toBe(true);
-      } else {
-        await expect(fig).toHaveClass(/is-missing/);
-        await expect(fig.locator('.media-fallback')).toBeVisible();
-      }
+    const caseStudy = page.locator('#case-study');
+    await expect(caseStudy.locator('ol.flow > li')).toHaveCount(6);
+    await expect(caseStudy).toContainText('Details anonymized due to NDA.');
+    for (const h of ['Context', 'Problem', 'Approach', 'Result']) {
+      await expect(caseStudy.getByRole('heading', { name: h, exact: true })).toBeVisible();
     }
+    await expect(caseStudy.getByRole('heading', { name: "What I'd do next" })).toHaveCount(0);
+    await expect(caseStudy.locator('.excerpt')).toBeVisible();
+    await expect(caseStudy).toContainText('2h → 5min');
+    // test.fixme is explained once in prose (the SKILL.md excerpt is the proof, not a repeat).
+    const prose = await page.locator('main').evaluate((m) => {
+      const clone = m.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll('pre, code').forEach((c) => c.remove());
+      return clone.innerText;
+    });
+    expect(prose.match(/test\.fixme/g) ?? []).toHaveLength(1);
+  });
+
+  test('the first stat uses the same numbers as the Playwright card', async ({ page }) => {
+    await page.goto('/');
+    const stat = page.locator('.impact li').first();
+    await expect(stat.locator('strong')).toHaveText('124 tests');
+    await expect(stat).toContainText('across Chromium, Firefox and WebKit · CI in ~2.5 min');
+    await expect(page.locator('.featured .result')).toContainText('124 tests');
+    await expect(page.locator('.featured .result')).toContainText('about 2.5 min');
+  });
+
+  for (const lang of ['en', 'pt'] as const) {
+    test(`no TODO or "coming soon" text is visible (${lang})`, async ({ page }) => {
+      await page.addInitScript((l) => localStorage.setItem('lang', l), lang);
+      await page.goto('/');
+      await expect(page.locator('html')).toHaveAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+      const text = await page.locator('body').innerText();
+      // "TODO" is case-sensitive: Portuguese has the word "todo" ("todo dia").
+      expect(text).not.toMatch(/TODO/);
+      expect(text).not.toMatch(/coming soon|em breve/i);
+      const dictHits = await page.evaluate((l) => {
+        const dict = (window as unknown as { __I18N__: Record<string, Record<string, string>> }).__I18N__;
+        return Object.entries(dict[l]).filter(([, v]) => /TODO/.test(v) || /coming soon|em breve/i.test(v)).map(([k]) => k);
+      }, lang);
+      expect(dictHits).toEqual([]);
+    });
+  }
+
+  test('toolbox is one table: Primary tools highlighted, the rest neutral, context rows aligned', async ({ page }) => {
+    await page.goto('/');
+    const skills = page.locator('#skills');
+    await expect(skills.locator('.legend')).toContainText('Primary');
+    await expect(skills.locator('.legend')).toContainText('Also experienced with');
+    await expect(skills.locator('table.toolbox')).toHaveCount(1);
+    const primary = skills.locator('.tags-primary li');
+    for (const t of ['Playwright', 'TypeScript', 'Maestro', 'Claude Code', 'Playwright MCP', 'Postman', 'Proxyman', 'GitHub Actions', 'Jira',
+      'Appium', 'Cypress', 'JavaScript', 'BrowserStack']) {
+      await expect(primary.getByText(t, { exact: true })).toBeVisible();
+    }
+    const others = skills.locator('ul.tags:not(.tags-primary) li');
+    await expect(others.getByText('Python (working knowledge)')).toBeVisible();
+    await expect(others.getByText('Java (basic)')).toBeVisible();
+    await expect(others.getByText('Selenium', { exact: true })).toBeVisible();
+    for (const row of ['Domains', 'Languages (spoken)']) {
+      await expect(skills.getByRole('rowheader', { name: row })).toBeVisible();
+    }
+    await setLang(page, 'pt');
+    await expect(skills.locator('.legend')).toContainText('Principais');
+    await expect(skills.locator('.legend')).toContainText('Também tenho experiência com');
+    await expect(others.getByText('Python (conhecimento prático)')).toBeVisible();
+    await expect(others.getByText('Java (básico)')).toBeVisible();
+    await expect(skills.getByRole('rowheader', { name: 'Domínios' })).toBeVisible();
+  });
+
+  test('project cards have no media slots and the Playwright card links the example bug reports', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#projects figure, #projects img')).toHaveCount(0);
     await expect(page.locator('.featured').getByRole('link', { name: 'See AI bug reports' })).toHaveAttribute('href', /docs\/examples\/bug-reports$/);
+    await expect(page.locator('#projects .intro')).toContainText('under NDA');
+  });
+
+  test('education has its own heading in the experience timeline', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#experience').getByRole('heading', { name: 'Education' })).toBeVisible();
+    await setLang(page, 'pt');
+    await expect(page.locator('#experience').getByRole('heading', { name: 'Formação' })).toBeVisible();
   });
 
   test('no phone number anywhere on the page', async ({ page }) => {
