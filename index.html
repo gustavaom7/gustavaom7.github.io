@@ -498,7 +498,7 @@
         <article class="project" aria-labelledby="maestro-title">
           <h3 id="maestro-title">Maestro mobile + AI test generator</h3>
           <ul class="tags"><li>Maestro</li><li>Python</li><li>Claude API</li><li>GitHub Actions</li></ul>
-          <p data-i18n="maestro.desc">Mobile automation with Maestro, a daily CI pipeline with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.</p>
+          <p data-i18n="maestro.desc">Mobile automation with Maestro, a CI pipeline on GitHub Actions with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.</p>
           <!-- TODO(Gustavo): add to this line how long a CI run takes (min) and the pass rate over recent runs. -->
           <p class="result" data-i18n="maestro.result">10 Maestro flows on an Android emulator in CI</p>
           <figure class="media">
@@ -519,8 +519,9 @@
             <img src="assets/projects/cypress-hybrid-suite.gif" loading="lazy" width="1280" height="720" alt="Screen recording: the Cypress runner going through the UI and API specs, with the Mochawesome report at the end" data-i18n-alt="media.cypress.alt" onerror="this.parentNode.classList.add('is-missing')">
             <figcaption class="media-fallback" data-i18n="media.soon">Demo recording coming soon</figcaption>
           </figure>
-          <!-- Needs the repo renamed from cypress-e2e-custom-commands to cypress-hybrid-suite on GitHub. -->
-          <a class="link" href="https://github.com/gustavaom7/cypress-hybrid-suite" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
+          <!-- TODO(Gustavo): after renaming the repo to cypress-hybrid-suite on GitHub, change this href to
+               https://github.com/gustavaom7/cypress-hybrid-suite (the current URL keeps working through GitHub's redirect). -->
+          <a class="link" href="https://github.com/gustavaom7/cypress-e2e-custom-commands" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
         </article>
       </div>
 
@@ -566,10 +567,11 @@
           <p data-i18n="case.result.d">Up to 90% less time writing test cases.</p>
           <!-- TODO(Gustavo): before → after time per feature (same numbers as the impact strip), and any quality signal you can share (e.g. bugs caught before release). -->
         </div>
-        <div>
+        <!-- TODO(Gustavo): write 1–2 sentences on what you'd improve next, put them in 'case.next.d' (EN and PT)
+             and remove the `hidden` attribute below to show this block. -->
+        <div hidden>
           <h3 data-i18n="case.next.t">What I'd do next</h3>
-          <!-- TODO(Gustavo): write 1–2 sentences on what you'd improve next. Replace the placeholder below. -->
-          <p class="todo" data-i18n="case.next.d">TODO(Gustavo): next steps to be written.</p>
+          <p data-i18n="case.next.d">TODO(Gustavo): next steps to be written.</p>
         </div>
       </div>
     </div>
@@ -715,7 +717,7 @@
       'feat.s3.t': 'Run', 'feat.s3.d': 'Chromium, Firefox, WebKit and mobile projects in CI, with a11y and performance gates.',
       'feat.s4.t': 'Triage', 'feat.s4.d': 'Failures are merged across browsers, classified, ranked by severity and written as Jira-ready drafts.',
       ghView: 'View on GitHub', 'feat.reports': 'See AI bug reports',
-      'maestro.desc': 'Mobile automation with Maestro, a daily CI pipeline with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.',
+      'maestro.desc': 'Mobile automation with Maestro, a CI pipeline on GitHub Actions with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.',
       'cypress.desc': 'UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.',
       more: 'More repos', 'more.api': 'contract and security tests',
       'feat.result': '11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation',
@@ -797,7 +799,7 @@
       'feat.s3.t': 'Rodar', 'feat.s3.d': 'Projetos Chromium, Firefox, WebKit e mobile no CI, com gates de acessibilidade e performance.',
       'feat.s4.t': 'Triar', 'feat.s4.d': 'Falhas são agrupadas entre browsers, classificadas, priorizadas por severidade e escritas como rascunhos prontos pro Jira.',
       ghView: 'Ver no GitHub', 'feat.reports': 'Ver bug reports da IA',
-      'maestro.desc': 'Automação mobile com Maestro, pipeline diário no CI com reporte no Slack, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a Claude API. Os flows gerados são revisados e rodados antes de cada commit.',
+      'maestro.desc': 'Automação mobile com Maestro, pipeline de CI no GitHub Actions com reporte no Slack, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a Claude API. Os flows gerados são revisados e rodados antes de cada commit.',
       'cypress.desc': 'Automação de UI e API com Page Objects, cy.session, testes de contrato, mock de rede, regressão visual e perfis de carga com k6, com matriz de regressão paralela no GitHub Actions.',
       more: 'Mais repos', 'more.api': 'testes de contrato e de segurança',
       'feat.result': '11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12',
