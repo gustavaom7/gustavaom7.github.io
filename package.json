@@ -1,0 +1,16 @@
+{
+  "name": "gustavaom7.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gustavo Mesquita's QA portfolio, tested with Playwright.",
+  "scripts": {
+    "serve": "http-server . -p 4173 -c-1 -s",
+    "test": "playwright test",
+    "test:live": "BASE_URL=https://gustavaom7.github.io playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "1.56.1",
+    "http-server": "^14.1.1"
+  }
+}
