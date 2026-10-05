@@ -23,13 +23,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <script>
-  // Runs before paint so the stored or preferred theme and language never flash.
+  // Runs before paint so the stored theme and language never flash. Dark unless the visitor picked light.
   (function () {
     var d = document.documentElement, theme, lang;
     try { theme = localStorage.getItem('theme'); lang = localStorage.getItem('lang'); } catch (e) {}
-    if (theme !== 'light' && theme !== 'dark') {
-      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
+    if (theme !== 'light') theme = 'dark';
     d.setAttribute('data-theme', theme);
     if (lang === 'pt') d.setAttribute('lang', 'pt-BR');
   })();
@@ -150,7 +148,8 @@
   @media (min-width: 720px) { .hero h1 { font-size: 44px; } }
   .hero .sub { margin-top: 20px; font-size: 18px; color: var(--muted); max-width: 56ch; }
   .hero .btn-row { margin-top: 32px; }
-  .hero .meta { margin-top: 24px; font-size: 14px; color: var(--muted); }
+  .hero .avail { margin-top: 20px; font-size: 15px; color: var(--text); }
+  .hero .meta { margin-top: 6px; font-size: 14px; color: var(--muted); }
 
   /* Terminal */
   .terminal {
@@ -208,6 +207,18 @@
   .highlights h3 { font-size: 18px; margin-bottom: 6px; }
   .highlights p { color: var(--muted); max-width: 52ch; }
 
+  .tiers { display: grid; gap: 40px 48px; }
+  @media (min-width: 960px) { .tiers { grid-template-columns: 1fr 1fr; } }
+  .tier h3 { font-size: 18px; margin-bottom: 8px; }
+  .tier-daily .tags li { background: transparent; border: 1px solid var(--pass); }
+  .tiers .skills > div { grid-template-columns: 1fr; gap: 8px; }
+  @media (min-width: 600px) { .tiers .skills > div { grid-template-columns: 170px 1fr; gap: 16px; } }
+  .skills.context { margin-top: 40px; }
+  .quality { margin-top: 48px; max-width: 72ch; border: 1px solid var(--line); border-left: 3px solid var(--pass); border-radius: 8px; padding: 20px 22px; }
+  .quality h3 { font-size: 18px; margin-bottom: 6px; }
+  .quality p { color: var(--muted); }
+  .quality-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 14px; font-size: 15px; }
+  .quality-links img { display: block; height: 20px; width: auto; }
   .skills { display: grid; margin: 0; }
   .skills > div { display: grid; gap: 8px; padding: 16px 0; border-top: 1px solid var(--line); }
   .skills > div:last-child { border-bottom: 1px solid var(--line); }
@@ -222,7 +233,36 @@
   @media (min-width: 720px) { .featured { padding: 40px; } }
   .featured h3 { font-size: 24px; }
   .featured .tags, .project .tags { margin-top: 14px; }
-  .featured > p { margin-top: 18px; max-width: 70ch; }
+  .feat-top { display: grid; gap: 28px; align-items: start; }
+  @media (min-width: 960px) { .feat-top { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; } }
+  .feat-top p { margin-top: 18px; max-width: 70ch; }
+  .feat-top .media { margin-top: 0; }
+  .result { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .feat-top p.result, .project p.result { margin-top: 14px; color: var(--muted); }
+  .media { margin: 20px 0 0; position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--chip); }
+  .media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .media-fallback { display: none; color: var(--muted); font-size: 14px; padding: 12px 14px; }
+  .media.is-missing { aspect-ratio: auto; background: transparent; border-style: dashed; }
+  .media.is-missing img { display: none; }
+  .media.is-missing .media-fallback { display: block; }
+  .case-flow { list-style: none; display: flex; flex-direction: column; margin: 0 0 48px; }
+  .case-flow li { position: relative; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 12px 14px; }
+  .case-flow li + li { margin-top: 30px; }
+  .case-flow li + li::before { content: "↓"; position: absolute; top: -26px; left: 16px; color: var(--pass-ink); font-family: "IBM Plex Mono", monospace; }
+  .case-flow strong { display: block; font-weight: 500; }
+  .case-flow small { display: block; color: var(--muted); font-size: 14px; }
+  @media (min-width: 960px) {
+    .case-flow { flex-direction: row; align-items: stretch; }
+    .case-flow li { flex: 1; }
+    .case-flow li + li { margin: 0 0 0 30px; }
+    .case-flow li + li::before { content: "→"; top: 50%; left: -23px; transform: translateY(-50%); }
+  }
+  .nda { margin: -28px 0 32px; font-size: 14px; color: var(--muted); font-style: italic; }
+  .case-grid { display: grid; gap: 28px 48px; }
+  @media (min-width: 880px) { .case-grid { grid-template-columns: 1fr 1fr; } }
+  .case-grid h3 { font-size: 18px; margin-bottom: 6px; }
+  .case-grid p { color: var(--muted); max-width: 60ch; }
+  .case-grid p.todo { color: var(--fail-ink); border: 1px dashed var(--fail); border-radius: 6px; padding: 6px 10px; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
   .steps { list-style: none; counter-reset: step; display: grid; gap: 20px; margin-top: 32px; }
   @media (min-width: 720px) { .steps { grid-template-columns: 1fr 1fr; gap: 24px 32px; } }
   @media (min-width: 1040px) { .steps { grid-template-columns: repeat(4, 1fr); } }
@@ -308,6 +348,7 @@
         <li><a href="#about" data-i18n="nav.about">About</a></li>
         <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
         <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#case-study" data-i18n="nav.case">Case study</a></li>
         <li><a href="#ai" data-i18n="nav.ai">AI in QA</a></li>
         <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
@@ -332,7 +373,9 @@
       <div class="btn-row">
         <a class="btn btn-primary" href="#projects" data-i18n="hero.cta">View projects</a>
         <a class="btn" href="/GustavoMesquita-QAEngineer-CV.pdf" download data-cv data-i18n="cv">Download CV</a>
+        <a class="btn" href="#contact" data-i18n="hero.contact">Get in touch</a>
       </div>
+      <p class="avail" data-i18n="hero.avail">Open to remote roles · overlap with US/EU hours</p>
       <p class="meta" data-i18n="hero.meta">Três Pontas, Brazil · Remote · English (advanced)</p>
     </div>
 
@@ -373,7 +416,9 @@
     <div class="wrap">
       <ul>
         <li><strong data-i18n="impact.1n">9+ years</strong><span data-i18n="impact.1">in QA, since 2017</span></li>
-        <li><strong data-i18n="impact.2n">up to 90%</strong><span data-i18n="impact.2">faster test-case writing with AI agents and Playwright MCP</span></li>
+        <!-- TODO(Gustavo): average time to write the test cases for one feature, before and after the AI workflow
+             (e.g. "4h → 25min"). When you have it, show it here like the "3h → 30min" item and keep "up to 90%" in the text. -->
+        <li><strong data-i18n="impact.2n">up to 90%</strong><span data-i18n="impact.2">less time writing test cases, with AI agents and Playwright MCP</span></li>
         <li><strong>3h → 30min</strong><span data-i18n="impact.3">daily application checkups after automating the E2E regression</span></li>
         <li><strong>−50%</strong><span data-i18n="impact.4">manual mobile testing cycles per release with Maestro and Appium</span></li>
       </ul>
@@ -393,23 +438,24 @@
         <div><h3 data-i18n="about.h3.t">AI in the QA flow</h3><p data-i18n="about.h3.d">Test generation and defect triage with Playwright MCP and Claude Code.</p></div>
         <div><h3 data-i18n="about.h4.t">Mobile, hands on</h3><p data-i18n="about.h4.d">Manual and automated testing on iOS and Android, on physical devices and in the cloud with LambdaTest and BrowserStack. Maestro, Appium and XCUITest for automation.</p></div>
       </div>
+      <aside class="quality" aria-labelledby="quality-title">
+        <h3 id="quality-title" data-i18n="quality.title">This site is tested with Playwright</h3>
+        <p data-i18n="quality.text">Every push runs a Playwright suite on desktop and iPhone 12, axe-core WCAG A/AA checks in English and Portuguese, light and dark, and a Lighthouse CI audit.</p>
+        <div class="quality-links">
+          <a href="https://github.com/gustavaom7/gustavaom7.github.io/actions/workflows/tests.yml" target="_blank" rel="noopener"><img src="https://github.com/gustavaom7/gustavaom7.github.io/actions/workflows/tests.yml/badge.svg?branch=main" alt="Site tests workflow status" width="96" height="20" data-i18n-alt="badgeAlt"></a>
+          <a href="https://github.com/gustavaom7/gustavaom7.github.io/actions/workflows/tests.yml" target="_blank" rel="noopener" data-i18n="quality.workflow">See the CI workflow</a>
+          <a href="https://github.com/gustavaom7/gustavaom7.github.io/tree/main/tests" target="_blank" rel="noopener" data-i18n="quality.tests">Read the tests</a>
+        </div>
+      </aside>
     </div>
   </section>
 
   <section class="section" id="skills" aria-labelledby="skills-title">
     <div class="wrap">
       <h2 id="skills-title" data-i18n="skills.title">Toolbox</h2>
-      <dl class="skills">
-        <div><dt data-i18n="skills.automation">Automation</dt><dd><ul class="tags"><li>Playwright (primary)</li><li>Cypress</li><li>Selenium</li><li>Appium</li><li>Maestro</li><li>XCUITest</li></ul></dd></div>
-        <div><dt data-i18n="skills.languages">Languages</dt><dd><ul class="tags"><li>TypeScript</li><li>JavaScript</li></ul></dd></div>
-        <div><dt data-i18n="skills.devices">Mobile devices</dt><dd><ul class="tags"><li data-i18n="skills.devices.1">Physical iOS and Android devices</li><li>LambdaTest</li><li>BrowserStack</li></ul></dd></div>
-        <div><dt data-i18n="skills.ai">AI-driven testing</dt><dd><ul class="tags"><li>Playwright MCP</li><li>Figma MCP</li><li>Claude Code</li><li>LLMs</li><li>prompt engineering</li></ul></dd></div>
-        <div><dt data-i18n="skills.api">API testing</dt><dd><ul class="tags"><li>Postman</li><li>Proxyman</li><li>Swagger</li></ul></dd></div>
-        <div><dt data-i18n="skills.db">Databases</dt><dd><ul class="tags"><li data-i18n="skills.db.1">SQL queries for data validation</li></ul></dd></div>
-        <div><dt data-i18n="skills.perf">Performance</dt><dd><ul class="tags"><li>k6</li></ul></dd></div>
-        <div><dt>CI/CD</dt><dd><ul class="tags"><li>GitHub Actions</li><li>GitLab CI</li><li>Docker</li></ul></dd></div>
-        <div><dt data-i18n="skills.tm">Test management</dt><dd><ul class="tags"><li>Jira</li><li>Xray</li><li>TestRail</li></ul></dd></div>
-        <div><dt data-i18n="skills.obs">Observability</dt><dd><ul class="tags"><li>Crashlytics</li><li>Firebase</li><li>Amplitude</li></ul></dd></div>
+      <!-- Daily use / Have used lists live in the SKILLS object in the script at the end of this file. -->
+      <div class="tiers" id="skill-tiers"></div>
+      <dl class="skills context">
         <div><dt data-i18n="skills.domains">Domains</dt><dd><ul class="tags"><li data-i18n="skills.domains.1">iGaming and sports betting</li><li data-i18n="skills.domains.2">mobile subscription apps</li><li data-i18n="skills.domains.3">payments and in-app purchases</li><li data-i18n="skills.domains.4">ad monetization</li></ul></dd></div>
         <div><dt data-i18n="skills.spoken">Languages (spoken)</dt><dd><ul class="tags"><li data-i18n="skills.spoken.1">Portuguese (native)</li><li data-i18n="skills.spoken.2">English (advanced)</li><li data-i18n="skills.spoken.3">Spanish (basic)</li></ul></dd></div>
       </dl>
@@ -422,9 +468,20 @@
       <p class="intro" data-i18n="projects.intro">Public repos with CI running on GitHub Actions.</p>
 
       <article class="featured" aria-labelledby="feat-title">
-        <h3 id="feat-title">Playwright &amp; AI Quality Architecture</h3>
-        <ul class="tags"><li>Playwright</li><li>TypeScript</li><li>Playwright MCP</li><li>Claude Code</li><li>k6</li><li>axe-core</li></ul>
-        <p data-i18n="feat.desc">A production-style E2E suite against SauceDemo, extended with an AI-driven workflow: agents explore pages through Playwright MCP and draft Page Objects and specs, and a triage script turns failures into Jira-ready bug reports. Cross-browser, mobile emulation, accessibility, network resilience, performance budgets and Slack reporting.</p>
+        <div class="feat-top">
+          <div>
+            <h3 id="feat-title">Playwright &amp; AI Quality Architecture</h3>
+            <ul class="tags"><li>Playwright</li><li>TypeScript</li><li>Playwright MCP</li><li>Claude Code</li><li>k6</li><li>axe-core</li></ul>
+            <p data-i18n="feat.desc">A production-style E2E suite against SauceDemo, extended with an AI-driven workflow: agents explore pages through Playwright MCP and draft Page Objects and specs, and a triage script turns failures into Jira-ready bug reports. Cross-browser, mobile emulation, accessibility, network resilience, performance budgets and Slack reporting.</p>
+            <!-- TODO(Gustavo): add to this line how long a full CI run takes (min) and how many recent runs had 0 flaky tests. -->
+            <p class="result" data-i18n="feat.result">11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation</p>
+          </div>
+          <figure class="media">
+            <!-- TODO(Gustavo): record assets/projects/playwright-ai-quality-architecture.gif (see the alt text for what it should show). -->
+            <img src="assets/projects/playwright-ai-quality-architecture.gif" loading="lazy" width="1280" height="720" alt="Screen recording: the Playwright suite running in the terminal, then the triage script turning a failure into a Jira-ready bug report" data-i18n-alt="media.pw.alt" onerror="this.parentNode.classList.add('is-missing')">
+            <figcaption class="media-fallback" data-i18n="media.soon">Demo recording coming soon</figcaption>
+          </figure>
+        </div>
         <ol class="steps">
           <li><h4 data-i18n="feat.s1.t">Explore</h4><p data-i18n="feat.s1.d">Claude Code drives a real browser via Playwright MCP and writes a page map.</p></li>
           <li><h4 data-i18n="feat.s2.t">Generate</h4><p data-i18n="feat.s2.d">Drafts a Page Object and spec in the repo's conventions, then runs lint, typecheck and the new test.</p></li>
@@ -442,13 +499,28 @@
           <h3 id="maestro-title">Maestro mobile + AI test generator</h3>
           <ul class="tags"><li>Maestro</li><li>Python</li><li>Claude API</li><li>GitHub Actions</li></ul>
           <p data-i18n="maestro.desc">Mobile automation with Maestro, a daily CI pipeline with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.</p>
+          <!-- TODO(Gustavo): add to this line how long a CI run takes (min) and the pass rate over recent runs. -->
+          <p class="result" data-i18n="maestro.result">10 Maestro flows on an Android emulator in CI</p>
+          <figure class="media">
+            <!-- TODO(Gustavo): record assets/projects/maestro-mobile-ai.gif (see the alt text for what it should show). -->
+            <img src="assets/projects/maestro-mobile-ai.gif" loading="lazy" width="1280" height="720" alt="Screen recording: the AI generator turning a plain-language scenario into a Maestro flow, then the flow running on an Android emulator" data-i18n-alt="media.maestro.alt" onerror="this.parentNode.classList.add('is-missing')">
+            <figcaption class="media-fallback" data-i18n="media.soon">Demo recording coming soon</figcaption>
+          </figure>
           <a class="link" href="https://github.com/gustavaom7/maestro-mobile-ai-qa" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
         </article>
         <article class="project" aria-labelledby="cypress-title">
           <h3 id="cypress-title">Cypress hybrid suite (UI + API)</h3>
           <ul class="tags"><li>Cypress</li><li>JavaScript</li><li>k6</li><li>Lighthouse</li></ul>
           <p data-i18n="cypress.desc">UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.</p>
-          <a class="link" href="https://github.com/gustavaom7/cypress-e2e-custom-commands" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
+          <!-- TODO(Gustavo): add to this line how long the regression matrix takes (min) and how many recent runs had 0 flaky tests. -->
+          <p class="result" data-i18n="cypress.result">11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel</p>
+          <figure class="media">
+            <!-- TODO(Gustavo): record assets/projects/cypress-hybrid-suite.gif (see the alt text for what it should show). -->
+            <img src="assets/projects/cypress-hybrid-suite.gif" loading="lazy" width="1280" height="720" alt="Screen recording: the Cypress runner going through the UI and API specs, with the Mochawesome report at the end" data-i18n-alt="media.cypress.alt" onerror="this.parentNode.classList.add('is-missing')">
+            <figcaption class="media-fallback" data-i18n="media.soon">Demo recording coming soon</figcaption>
+          </figure>
+          <!-- Needs the repo renamed from cypress-e2e-custom-commands to cypress-hybrid-suite on GitHub. -->
+          <a class="link" href="https://github.com/gustavaom7/cypress-hybrid-suite" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
         </article>
       </div>
 
@@ -458,6 +530,47 @@
           <li><a href="https://github.com/gustavaom7/api-testing-restassured" target="_blank" rel="noopener">API testing with RestAssured</a> <span>· RestAssured, JUnit5, Allure, <span data-i18n="more.api">contract and security tests</span></span></li>
           <li><a href="https://github.com/gustavaom7/xcuitest-ios-automation" target="_blank" rel="noopener">iOS automation with XCUITest</a> <span>· Swift, Page Objects, GitHub Actions</span></li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="case-study" aria-labelledby="case-title">
+    <div class="wrap">
+      <h2 id="case-title" data-i18n="case.title">Case study: AI-assisted test case writing</h2>
+      <p class="intro" data-i18n="case.intro">How an AI workflow cut the time spent writing test cases on two betting platforms.</p>
+      <p class="nda" data-i18n="case.nda">Details anonymized due to NDA.</p>
+      <ol class="case-flow" aria-label="Workflow diagram" data-i18n-aria="case.flowLabel">
+        <li><strong data-i18n="case.f1">Feature description</strong></li>
+        <li><strong data-i18n="case.f2">Claude Code skill</strong><small data-i18n="case.f2s">test cases and acceptance criteria</small></li>
+        <li><strong data-i18n="case.f3">Playwright MCP</strong><small data-i18n="case.f3s">maps the page, drafts the spec</small></li>
+        <li><strong data-i18n="case.f4">Human review</strong><small data-i18n="case.f4s">unconfirmed → test.fixme</small></li>
+        <li><strong data-i18n="case.f5">Merged and run in CI</strong></li>
+      </ol>
+      <div class="case-grid">
+        <div>
+          <h3 data-i18n="case.context.t">Context</h3>
+          <p data-i18n="case.context.d">I own quality end to end for two betting brands, across web, mobile web and native app: sportsbook, live betting and casino flows.</p>
+          <!-- TODO(Gustavo): optional scale for context (releases per week, number of flows or features covered), if it can be shared under the NDA. -->
+        </div>
+        <div>
+          <h3 data-i18n="case.problem.t">Problem</h3>
+          <!-- TODO(Gustavo): confirm this sentence and add what made it painful (how many test cases per feature, how long it took, what it delayed). -->
+          <p data-i18n="case.problem.d">Test cases were written by hand for every new feature, on web, mobile web and native app.</p>
+        </div>
+        <div>
+          <h3 data-i18n="case.approach.t">Approach</h3>
+          <p data-i18n="case.approach.d">Claude Code skills turn a feature description into test cases and acceptance criteria. Agents map the pages through Playwright MCP and draft the Playwright tests. A human reviews everything before merge, and anything the agent can't confirm is marked test.fixme instead of guessed.</p>
+        </div>
+        <div>
+          <h3 data-i18n="case.result.t">Result</h3>
+          <p data-i18n="case.result.d">Up to 90% less time writing test cases.</p>
+          <!-- TODO(Gustavo): before → after time per feature (same numbers as the impact strip), and any quality signal you can share (e.g. bugs caught before release). -->
+        </div>
+        <div>
+          <h3 data-i18n="case.next.t">What I'd do next</h3>
+          <!-- TODO(Gustavo): write 1–2 sentences on what you'd improve next. Replace the placeholder below. -->
+          <p class="todo" data-i18n="case.next.d">TODO(Gustavo): next steps to be written.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -499,7 +612,7 @@
           <p class="when"><span data-i18n="remote">Remote</span> · <span data-i18n="exp.1.when">Apr 2026 – Present</span><span class="now" data-i18n="current">Current</span></p>
           <ul class="bullets">
             <li data-i18n="exp.1.b1">Owns quality end to end for Estrela Bet and Vupi across web, mobile web and native app.</li>
-            <li data-i18n="exp.1.b2">Cut test-case writing time by up to 90% with an AI test generation workflow on Playwright MCP.</li>
+            <li data-i18n="exp.1.b2">Cut the time spent writing test cases by up to 90% with an AI test generation workflow on Playwright MCP.</li>
             <li data-i18n="exp.1.b3">Cut daily checkups from 3 hours to under 30 minutes by automating the E2E regression across web and mobile.</li>
             <li data-i18n="exp.1.b4">Built a k6 pipeline that measures page-load metrics after every deploy and posts results to Slack.</li>
           </ul>
@@ -565,17 +678,18 @@
   var I18N = {
     en: {
       skip: 'Skip to content', navLabel: 'Main', langLabel: 'Language',
-      'nav.about': 'About', 'nav.skills': 'Skills', 'nav.projects': 'Projects', 'nav.ai': 'AI in QA', 'nav.experience': 'Experience', 'nav.contact': 'Contact',
+      'nav.about': 'About', 'nav.skills': 'Skills', 'nav.projects': 'Projects', 'nav.case': 'Case study', 'nav.ai': 'AI in QA', 'nav.experience': 'Experience', 'nav.contact': 'Contact',
       'theme.toLight': 'Switch to light theme', 'theme.toDark': 'Switch to dark theme',
       'hero.title': 'I automate quality, and I put AI to work doing it.',
       'hero.sub': '9+ years in QA across web, mobile web and native apps. Playwright end to end, AI agents that write test cases and triage failures, and two betting brands in production every day.',
-      'hero.cta': 'View projects', cv: 'Download CV',
+      'hero.cta': 'View projects', cv: 'Download CV', 'hero.contact': 'Get in touch',
+      'hero.avail': 'Open to remote roles · overlap with US/EU hours',
       'hero.meta': 'Três Pontas, Brazil · Remote · English (advanced)',
       terminalLabel: 'Terminal demo: npx playwright test runs 52 tests, 51 pass and 1 fails (inventory sort by price, low to high). npm run triage merges the failure across chromium, firefox and webkit, classifies it as functional with high severity, and writes a Jira-ready bug report: Sort by price returns wrong order.',
       replay: 'replay',
       'impact.1n': '9+ years', 'impact.2n': 'up to 90%',
       'impact.1': 'in QA, since 2017',
-      'impact.2': 'faster test-case writing with AI agents and Playwright MCP',
+      'impact.2': 'less time writing test cases, with AI agents and Playwright MCP',
       'impact.3': 'daily application checkups after automating the E2E regression',
       'impact.4': 'manual mobile testing cycles per release with Maestro and Appium',
       'about.title': 'Quality is a pipeline, not a phase.',
@@ -585,10 +699,13 @@
       'about.h2.t': 'End-to-end automation', 'about.h2.d': 'Sportsbook, live betting and casino flows on web and mobile with Playwright.',
       'about.h3.t': 'AI in the QA flow', 'about.h3.d': 'Test generation and defect triage with Playwright MCP and Claude Code.',
       'about.h4.t': 'Mobile, hands on', 'about.h4.d': 'Manual and automated testing on iOS and Android, on physical devices and in the cloud with LambdaTest and BrowserStack. Maestro, Appium and XCUITest for automation.',
-      'skills.title': 'Toolbox', 'skills.automation': 'Automation', 'skills.languages': 'Languages', 'skills.devices': 'Mobile devices',
-      'skills.devices.1': 'Physical iOS and Android devices', 'skills.ai': 'AI-driven testing', 'skills.api': 'API testing',
-      'skills.db': 'Databases', 'skills.db.1': 'SQL queries for data validation', 'skills.perf': 'Performance',
-      'skills.tm': 'Test management', 'skills.obs': 'Observability', 'skills.domains': 'Domains',
+      'quality.title': 'This site is tested with Playwright',
+      'quality.text': 'Every push runs a Playwright suite on desktop and iPhone 12, axe-core WCAG A/AA checks in English and Portuguese, light and dark, and a Lighthouse CI audit.',
+      'quality.workflow': 'See the CI workflow', 'quality.tests': 'Read the tests',
+      'skills.title': 'Toolbox', 'skills.daily': 'Daily use', 'skills.used': 'Have used',
+      'skills.automation': 'Automation', 'skills.languages': 'Languages', 'skills.devices': 'Mobile devices',
+      'skills.ai': 'AI-driven testing', 'skills.api': 'API testing', 'skills.db': 'Databases', 'skills.perf': 'Performance',
+      'skills.cicd': 'CI/CD', 'skills.tm': 'Test management', 'skills.obs': 'Observability', 'skills.domains': 'Domains',
       'skills.domains.1': 'iGaming and sports betting', 'skills.domains.2': 'mobile subscription apps', 'skills.domains.3': 'payments and in-app purchases', 'skills.domains.4': 'ad monetization',
       'skills.spoken': 'Languages (spoken)', 'skills.spoken.1': 'Portuguese (native)', 'skills.spoken.2': 'English (advanced)', 'skills.spoken.3': 'Spanish (basic)',
       'projects.title': 'Things I built', 'projects.intro': 'Public repos with CI running on GitHub Actions.',
@@ -601,6 +718,24 @@
       'maestro.desc': 'Mobile automation with Maestro, a daily CI pipeline with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.',
       'cypress.desc': 'UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.',
       more: 'More repos', 'more.api': 'contract and security tests',
+      'feat.result': '11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation',
+      'maestro.result': '10 Maestro flows on an Android emulator in CI',
+      'cypress.result': '11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel',
+      'media.soon': 'Demo recording coming soon',
+      'media.pw.alt': 'Screen recording: the Playwright suite running in the terminal, then the triage script turning a failure into a Jira-ready bug report',
+      'media.maestro.alt': 'Screen recording: the AI generator turning a plain-language scenario into a Maestro flow, then the flow running on an Android emulator',
+      'media.cypress.alt': 'Screen recording: the Cypress runner going through the UI and API specs, with the Mochawesome report at the end',
+      'case.title': 'Case study: AI-assisted test case writing',
+      'case.intro': 'How an AI workflow cut the time spent writing test cases on two betting platforms.',
+      'case.nda': 'Details anonymized due to NDA.', 'case.flowLabel': 'Workflow diagram',
+      'case.f1': 'Feature description', 'case.f2': 'Claude Code skill', 'case.f2s': 'test cases and acceptance criteria',
+      'case.f3': 'Playwright MCP', 'case.f3s': 'maps the page, drafts the spec',
+      'case.f4': 'Human review', 'case.f4s': 'unconfirmed → test.fixme', 'case.f5': 'Merged and run in CI',
+      'case.context.t': 'Context', 'case.context.d': 'I own quality end to end for two betting brands, across web, mobile web and native app: sportsbook, live betting and casino flows.',
+      'case.problem.t': 'Problem', 'case.problem.d': 'Test cases were written by hand for every new feature, on web, mobile web and native app.',
+      'case.approach.t': 'Approach', 'case.approach.d': "Claude Code skills turn a feature description into test cases and acceptance criteria. Agents map the pages through Playwright MCP and draft the Playwright tests. A human reviews everything before merge, and anything the agent can't confirm is marked test.fixme instead of guessed.",
+      'case.result.t': 'Result', 'case.result.d': 'Up to 90% less time writing test cases.',
+      'case.next.t': "What I'd do next", 'case.next.d': 'TODO(Gustavo): next steps to be written.',
       'ai.title': 'How I put AI to work in QA', 'ai.intro': 'Not a prompt collection. A pipeline I use every day, with a human reviewing at the end.',
       'ai.1': 'Feature description', 'ai.2': 'Test cases and acceptance criteria', 'ai.2s': 'Claude Code skill', 'ai.3': 'Playwright spec', 'ai.3s': 'via MCP',
       'ai.4': 'Run in CI', 'ai.5': 'Triage', 'ai.6': 'Jira-ready bug report',
@@ -610,7 +745,7 @@
       'exp.1.when': 'Apr 2026 – Present', 'exp.2.when': 'Sep 2025 – May 2026', 'exp.3.when': 'Mar 2023 – Sep 2025', 'exp.4.when': 'May 2022 – Mar 2023',
       'exp.5.when': 'Jan 2022 – May 2022', 'exp.6.when': 'Sep 2020 – Jan 2022', 'exp.7.when': 'Jun 2017 – Jun 2019',
       'exp.1.b1': 'Owns quality end to end for Estrela Bet and Vupi across web, mobile web and native app.',
-      'exp.1.b2': 'Cut test-case writing time by up to 90% with an AI test generation workflow on Playwright MCP.',
+      'exp.1.b2': 'Cut the time spent writing test cases by up to 90% with an AI test generation workflow on Playwright MCP.',
       'exp.1.b3': 'Cut daily checkups from 3 hours to under 30 minutes by automating the E2E regression across web and mobile.',
       'exp.1.b4': 'Built a k6 pipeline that measures page-load metrics after every deploy and posts results to Slack.',
       'exp.2.b1': 'First QA hired: built the QA process and cut manual mobile testing cycles by 50% per release with Maestro and Appium.',
@@ -625,17 +760,18 @@
     },
     pt: {
       skip: 'Pular para o conteúdo', navLabel: 'Principal', langLabel: 'Idioma',
-      'nav.about': 'Sobre', 'nav.skills': 'Skills', 'nav.projects': 'Projetos', 'nav.ai': 'IA no QA', 'nav.experience': 'Experiência', 'nav.contact': 'Contato',
+      'nav.about': 'Sobre', 'nav.skills': 'Skills', 'nav.projects': 'Projetos', 'nav.case': 'Estudo de caso', 'nav.ai': 'IA no QA', 'nav.experience': 'Experiência', 'nav.contact': 'Contato',
       'theme.toLight': 'Mudar para o tema claro', 'theme.toDark': 'Mudar para o tema escuro',
       'hero.title': 'Eu automatizo qualidade, e coloco a IA pra trabalhar nisso.',
       'hero.sub': '9+ anos em QA em web, mobile web e apps nativos. Playwright de ponta a ponta, agentes de IA que escrevem casos de teste e fazem triagem de falhas, e duas marcas de apostas em produção todo dia.',
-      'hero.cta': 'Ver projetos', cv: 'Baixar CV',
+      'hero.cta': 'Ver projetos', cv: 'Baixar CV', 'hero.contact': 'Fale comigo',
+      'hero.avail': 'Aberto a vagas remotas · sobreposição com horários dos EUA/Europa',
       'hero.meta': 'Três Pontas, MG · Remoto · Inglês avançado',
       terminalLabel: 'Demonstração de terminal: npx playwright test roda 52 testes, 51 passam e 1 falha (ordenação do inventário por preço, do menor para o maior). npm run triage agrupa a falha entre chromium, firefox e webkit, classifica como funcional com severidade alta e escreve um bug report pronto pro Jira: Sort by price returns wrong order.',
       replay: 'replay',
       'impact.1n': '9+ anos', 'impact.2n': 'até 90%',
       'impact.1': 'em QA, desde 2017',
-      'impact.2': 'menos tempo escrevendo casos de teste com agentes de IA e Playwright MCP',
+      'impact.2': 'menos tempo escrevendo casos de teste, com agentes de IA e Playwright MCP',
       'impact.3': 'checkup diário da aplicação depois de automatizar a regressão E2E',
       'impact.4': 'ciclos de teste manual mobile por release com Maestro e Appium',
       'about.title': 'Qualidade é pipeline, não fase.',
@@ -645,10 +781,13 @@
       'about.h2.t': 'Automação de ponta a ponta', 'about.h2.d': 'Fluxos de sportsbook, apostas ao vivo e cassino em web e mobile com Playwright.',
       'about.h3.t': 'IA no fluxo de QA', 'about.h3.d': 'Geração de testes e triagem de defeitos com Playwright MCP e Claude Code.',
       'about.h4.t': 'Mobile na mão', 'about.h4.d': 'Testes manuais e automatizados em iOS e Android, em dispositivos físicos e na nuvem com LambdaTest e BrowserStack. Maestro, Appium e XCUITest na automação.',
-      'skills.title': 'Caixa de ferramentas', 'skills.automation': 'Automação', 'skills.languages': 'Linguagens', 'skills.devices': 'Dispositivos mobile',
-      'skills.devices.1': 'Dispositivos físicos iOS e Android', 'skills.ai': 'Testes com IA', 'skills.api': 'Testes de API',
-      'skills.db': 'Banco de dados', 'skills.db.1': 'Consultas SQL para validação de dados', 'skills.perf': 'Performance',
-      'skills.tm': 'Gestão de testes', 'skills.obs': 'Observabilidade', 'skills.domains': 'Domínios',
+      'quality.title': 'Este site é testado com Playwright',
+      'quality.text': 'Cada push roda uma suíte Playwright em desktop e iPhone 12, checagens axe-core WCAG A/AA em inglês e português, tema claro e escuro, e uma auditoria do Lighthouse CI.',
+      'quality.workflow': 'Ver o workflow de CI', 'quality.tests': 'Ler os testes',
+      'skills.title': 'Caixa de ferramentas', 'skills.daily': 'Uso diário', 'skills.used': 'Já usei',
+      'skills.automation': 'Automação', 'skills.languages': 'Linguagens', 'skills.devices': 'Dispositivos mobile',
+      'skills.ai': 'Testes com IA', 'skills.api': 'Testes de API', 'skills.db': 'Banco de dados', 'skills.perf': 'Performance',
+      'skills.cicd': 'CI/CD', 'skills.tm': 'Gestão de testes', 'skills.obs': 'Observabilidade', 'skills.domains': 'Domínios',
       'skills.domains.1': 'iGaming e apostas esportivas', 'skills.domains.2': 'apps mobile de assinatura', 'skills.domains.3': 'pagamentos e compras in-app', 'skills.domains.4': 'monetização com anúncios',
       'skills.spoken': 'Idiomas', 'skills.spoken.1': 'Português (nativo)', 'skills.spoken.2': 'Inglês (avançado)', 'skills.spoken.3': 'Espanhol (básico)',
       'projects.title': 'O que eu construí', 'projects.intro': 'Repos públicos com CI rodando no GitHub Actions.',
@@ -661,6 +800,24 @@
       'maestro.desc': 'Automação mobile com Maestro, pipeline diário no CI com reporte no Slack, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a Claude API. Os flows gerados são revisados e rodados antes de cada commit.',
       'cypress.desc': 'Automação de UI e API com Page Objects, cy.session, testes de contrato, mock de rede, regressão visual e perfis de carga com k6, com matriz de regressão paralela no GitHub Actions.',
       more: 'Mais repos', 'more.api': 'testes de contrato e de segurança',
+      'feat.result': '11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12',
+      'maestro.result': '10 flows Maestro num emulador Android no CI',
+      'cypress.result': '11 arquivos de spec entre UI, API, visual e Lighthouse · smoke em viewports desktop e mobile em paralelo',
+      'media.soon': 'Gravação da demo em breve',
+      'media.pw.alt': 'Gravação de tela: a suíte Playwright rodando no terminal e depois o script de triagem transformando uma falha num bug report pronto pro Jira',
+      'media.maestro.alt': 'Gravação de tela: o gerador de IA transformando um cenário em linguagem natural num flow Maestro e depois o flow rodando num emulador Android',
+      'media.cypress.alt': 'Gravação de tela: o runner do Cypress passando pelas specs de UI e API, com o relatório Mochawesome no fim',
+      'case.title': 'Estudo de caso: escrita de casos de teste com IA',
+      'case.intro': 'Como um fluxo de IA reduziu o tempo de escrita de casos de teste em duas plataformas de apostas.',
+      'case.nda': 'Detalhes anonimizados por NDA.', 'case.flowLabel': 'Diagrama do fluxo',
+      'case.f1': 'Descrição da feature', 'case.f2': 'Skill do Claude Code', 'case.f2s': 'casos de teste e critérios de aceite',
+      'case.f3': 'Playwright MCP', 'case.f3s': 'mapeia a página, rascunha a spec',
+      'case.f4': 'Revisão humana', 'case.f4s': 'não confirmado → test.fixme', 'case.f5': 'Merge e execução no CI',
+      'case.context.t': 'Contexto', 'case.context.d': 'Sou responsável pela qualidade de ponta a ponta de duas marcas de apostas, em web, mobile web e app nativo: fluxos de sportsbook, apostas ao vivo e cassino.',
+      'case.problem.t': 'Problema', 'case.problem.d': 'Os casos de teste eram escritos à mão para cada feature nova, em web, mobile web e app nativo.',
+      'case.approach.t': 'Abordagem', 'case.approach.d': 'Skills do Claude Code transformam uma descrição de feature em casos de teste e critérios de aceite. Agentes mapeiam as páginas via Playwright MCP e rascunham os testes Playwright. Uma pessoa revisa tudo antes do merge, e o que o agente não consegue confirmar vira test.fixme em vez de chute.',
+      'case.result.t': 'Resultado', 'case.result.d': 'Até 90% menos tempo escrevendo casos de teste.',
+      'case.next.t': 'O que eu faria em seguida', 'case.next.d': 'TODO(Gustavo): próximos passos a escrever.',
       'ai.title': 'Como eu coloco a IA pra trabalhar no QA', 'ai.intro': 'Não é coleção de prompt. É uma pipeline que eu uso todo dia, com revisão humana no fim.',
       'ai.1': 'Descrição da feature', 'ai.2': 'Casos de teste e critérios de aceite', 'ai.2s': 'skill do Claude Code', 'ai.3': 'Spec Playwright', 'ai.3s': 'via MCP',
       'ai.4': 'Rodar no CI', 'ai.5': 'Triagem', 'ai.6': 'Bug report pronto pro Jira',
@@ -670,7 +827,7 @@
       'exp.1.when': 'abr 2026 – atual', 'exp.2.when': 'set 2025 – mai 2026', 'exp.3.when': 'mar 2023 – set 2025', 'exp.4.when': 'mai 2022 – mar 2023',
       'exp.5.when': 'jan 2022 – mai 2022', 'exp.6.when': 'set 2020 – jan 2022', 'exp.7.when': 'jun 2017 – jun 2019',
       'exp.1.b1': 'Responsável pela qualidade de ponta a ponta da Estrela Bet e da Vupi em web, mobile web e app nativo.',
-      'exp.1.b2': 'Reduziu em até 90% o tempo de escrita de casos de teste com um fluxo de geração por IA no Playwright MCP.',
+      'exp.1.b2': 'Reduziu em até 90% o tempo gasto escrevendo casos de teste com um fluxo de geração por IA no Playwright MCP.',
       'exp.1.b3': 'Reduziu o checkup diário de 3 horas para menos de 30 minutos automatizando a regressão E2E em web e mobile.',
       'exp.1.b4': 'Criou uma pipeline k6 que mede métricas de carregamento a cada deploy e publica no Slack.',
       'exp.2.b1': 'Primeiro QA contratado: criou o processo de QA e reduziu em 50% os ciclos de teste manual mobile por release com Maestro e Appium.',
@@ -686,15 +843,68 @@
   };
   window.__I18N__ = I18N;
 
+  // Skills by tier. Edit here: keys are categories (labels come from I18N 'skills.<key>'),
+  // items are plain strings, or { en, pt } when the label needs translating.
+  var SKILLS = {
+    daily: {
+      automation: ['Playwright', 'Maestro'],
+      languages: ['TypeScript'],
+      ai: ['Claude Code', 'Playwright MCP'],
+      api: ['Postman', 'Proxyman'],
+      cicd: ['GitHub Actions'],
+      tm: ['Jira']
+    },
+    used: {
+      automation: ['Cypress', 'Selenium', 'Appium', 'XCUITest'],
+      languages: ['JavaScript', { en: 'Python (working knowledge)', pt: 'Python (conhecimento prático)' }, { en: 'Java (basic)', pt: 'Java (básico)' }],
+      devices: [{ en: 'Physical iOS and Android devices', pt: 'Dispositivos físicos iOS e Android' }, 'LambdaTest', 'BrowserStack'],
+      ai: ['Figma MCP', 'LLMs', 'prompt engineering'],
+      api: ['Swagger'],
+      db: [{ en: 'SQL queries for data validation', pt: 'Consultas SQL para validação de dados' }],
+      perf: ['k6'],
+      cicd: ['GitLab CI', 'Docker'],
+      tm: ['Xray', 'TestRail'],
+      obs: ['Crashlytics', 'Firebase', 'Amplitude']
+    }
+  };
+  window.__SKILLS__ = SKILLS;
+
   var root = document.documentElement;
   var lang = root.getAttribute('lang') === 'pt-BR' ? 'pt' : 'en';
 
   function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   function t(key) { return I18N[lang][key]; }
 
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+  function renderSkills() {
+    var host = document.getElementById('skill-tiers');
+    host.textContent = '';
+    ['daily', 'used'].forEach(function (tier) {
+      var col = el('div', 'tier tier-' + tier);
+      var h = el('h3'); h.setAttribute('data-i18n', 'skills.' + tier); col.appendChild(h);
+      var dl = el('dl', 'skills');
+      Object.keys(SKILLS[tier]).forEach(function (cat) {
+        var row = el('div');
+        var dt = el('dt'); dt.setAttribute('data-i18n', 'skills.' + cat); row.appendChild(dt);
+        var ul = el('ul', 'tags');
+        SKILLS[tier][cat].forEach(function (item) { ul.appendChild(el('li', '', typeof item === 'string' ? item : item[lang])); });
+        var dd = el('dd'); dd.appendChild(ul); row.appendChild(dd);
+        dl.appendChild(row);
+      });
+      col.appendChild(dl);
+      host.appendChild(col);
+    });
+  }
+
   function applyLang(next, persist) {
     lang = next;
     root.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+    renderSkills();
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { el.setAttribute('alt', t(el.getAttribute('data-i18n-alt'))); });
