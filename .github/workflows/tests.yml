@@ -25,3 +25,23 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Lighthouse CI (accessibility, best practices and SEO gate; performance warns)
+        run: npx --yes @lhci/cli@0.15.1 autorun
+      - name: Scores in the job summary
+        if: ${{ !cancelled() }}
+        run: node scripts/lhci-summary.mjs >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: lighthouse-report
+          path: lhci-report/
+          retention-days: 14
