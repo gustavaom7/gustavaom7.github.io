@@ -10,7 +10,7 @@ One static `index.html` (inline CSS and JS, no build), EN/PT and dark/light togg
 
 The site has its own Playwright suite (`tests/portfolio.spec.ts`), run on every push and PR on a desktop and an iPhone 12 project:
 console errors and failed requests, language and theme toggles with persistence, external links, the CV download,
-the copy-email feedback, horizontal overflow, axe-core WCAG A/AA in both themes, and the terminal animation with and without reduced motion.
+the copy-email feedback, horizontal overflow, axe-core WCAG A/AA in both themes, the terminal tabs (Playwright and Appium demos, mouse and keyboard) and their animation with and without reduced motion, and the featured project cards.
 
 ```bash
 npm ci

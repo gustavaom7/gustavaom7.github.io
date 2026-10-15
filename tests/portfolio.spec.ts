@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 const CV_PATH = '/GustavoMesquita-QAEngineer-CV.pdf';
 const EMAIL = 'gustavogmmg@hotmail.com';
-const SECTION_ORDER = ['about', 'projects', 'case-study', 'experience', 'skills', 'contact'];
+const SECTION_ORDER = ['projects', 'case-study', 'about', 'experience', 'skills', 'contact'];
 
 async function setLang(page: Page, lang: 'en' | 'pt') {
   await page.getByRole('button', { name: lang.toUpperCase(), exact: true }).click();
@@ -37,7 +37,7 @@ test.describe('portfolio', () => {
     await expect(html).toHaveAttribute('lang', 'pt-BR');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Eu automatizo qualidade, e coloco a IA pra trabalhar nisso.');
     await expect(page.getByRole('heading', { name: 'Bora testar algo juntos.' })).toBeVisible();
-    await expect(page.locator('a[data-cv]').first()).toHaveText('Baixar CV');
+    await expect(page.locator('.hero a[data-cv]')).toHaveText('Baixar CV');
 
     await page.reload();
     await expect(html).toHaveAttribute('lang', 'pt-BR');
@@ -111,7 +111,7 @@ test.describe('portfolio', () => {
     await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(15, 28, 23)');
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(7, 11, 16)');
   });
 
   test('external links have a valid href and open with rel="noopener"', async ({ page }) => {
@@ -131,8 +131,9 @@ test.describe('portfolio', () => {
   test('CV buttons point to a PDF that answers 200', async ({ page, request }) => {
     await page.goto('/');
     const hrefs = await page.locator('a[data-cv]').evaluateAll((els) => els.map((a) => a.getAttribute('href')));
-    expect(hrefs).toEqual([CV_PATH, CV_PATH]);
-    await expect(page.locator('a[data-cv]').first()).toHaveAttribute('download', '');
+    // Header, hero and contact.
+    expect(hrefs).toEqual([CV_PATH, CV_PATH, CV_PATH]);
+    for (const cv of await page.locator('a[data-cv]').all()) await expect(cv).toHaveAttribute('download', '');
     const res = await request.get(CV_PATH);
     expect(res.status()).toBe(200);
     expect((await res.body()).subarray(0, 5).toString()).toBe('%PDF-');
@@ -206,8 +207,8 @@ test.describe('portfolio', () => {
     const stat = page.locator('.impact li').first();
     await expect(stat.locator('strong')).toHaveText('124 tests');
     await expect(stat).toContainText('across Chromium, Firefox and WebKit · CI in ~2.5 min');
-    await expect(page.locator('.featured .result')).toContainText('124 tests');
-    await expect(page.locator('.featured .result')).toContainText('about 2.5 min');
+    await expect(page.locator('#feat-playwright .result')).toContainText('124 tests');
+    await expect(page.locator('#feat-playwright .result')).toContainText('about 2.5 min');
   });
 
   for (const lang of ['en', 'pt'] as const) {
@@ -256,7 +257,7 @@ test.describe('portfolio', () => {
   test('project cards have no media slots and the Playwright card links the example bug reports', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#projects figure, #projects img')).toHaveCount(0);
-    await expect(page.locator('.featured').getByRole('link', { name: 'See AI bug reports' })).toHaveAttribute('href', /docs\/examples\/bug-reports$/);
+    await expect(page.locator('#feat-playwright').getByRole('link', { name: 'See AI bug reports' })).toHaveAttribute('href', /docs\/examples\/bug-reports$/);
     await expect(page.locator('#projects .intro')).toContainText('under NDA');
   });
 
@@ -313,6 +314,61 @@ test.describe('portfolio', () => {
       });
     }
   }
+
+  test('the Appium project is featured next to Playwright, with its report and real numbers', async ({ page }) => {
+    await page.goto('/');
+    const featured = page.locator('#projects article.featured');
+    await expect(featured).toHaveCount(2);
+    const appium = page.locator('#feat-appium');
+    await expect(appium.getByRole('heading', { level: 3 })).toContainText('Appium Mobile E2E');
+    await expect(appium.locator('.result')).toContainText('64 tests in 18 spec files');
+    await expect(appium.locator('.result')).toContainText('iOS CI on the roadmap');
+    await expect(appium.locator('ol.steps > li')).toHaveCount(4);
+    await expect(appium.getByRole('link', { name: 'View on GitHub' })).toHaveAttribute('href', 'https://github.com/gustavaom7/appium-mobile-e2e-framework');
+    await expect(appium.getByRole('link', { name: 'Open the Allure report' })).toHaveAttribute('href', 'https://gustavaom7.github.io/appium-mobile-e2e-framework/');
+    await setLang(page, 'pt');
+    await expect(appium.getByRole('link', { name: 'Abrir o relatório Allure' })).toBeVisible();
+    await expect(appium.locator('.result')).toContainText('64 testes em 18 arquivos de spec');
+  });
+
+  test('terminal tabs switch between the Playwright and Appium demos, by click and by keyboard', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const term = page.locator('#terminal');
+    const pw = page.getByRole('tab', { name: 'playwright' });
+    const ap = page.getByRole('tab', { name: 'appium' });
+    await expect(pw).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('#bug-card')).toBeVisible();
+    await expect(page.locator('#bug-card-ap')).toBeHidden();
+
+    await ap.click();
+    await expect(ap).toHaveAttribute('aria-selected', 'true');
+    await expect(pw).toHaveAttribute('aria-selected', 'false');
+    await expect(term).toHaveAttribute('data-state', 'done');
+    await expect(page.getByRole('tabpanel')).toHaveAttribute('id', 'panel-ap');
+    await expect(page.locator('#bug-card-ap')).toBeVisible();
+    await expect(page.locator('#bug-card-ap')).toContainText('Payment error vanishes on Review Order');
+    await expect(page.locator('#bug-card')).toBeHidden();
+
+    await ap.press('ArrowRight');
+    await expect(pw).toBeFocused();
+    await expect(pw).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('#bug-card')).toBeVisible();
+    await expect(pw).toHaveAttribute('tabindex', '0');
+    await expect(ap).toHaveAttribute('tabindex', '-1');
+  });
+
+  test('the Appium tab animates and stops on its triage card', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+    const term = page.locator('#terminal');
+    await page.getByRole('tab', { name: 'appium' }).click();
+    await expect(term).toHaveAttribute('data-state', 'running');
+    await expect(page.locator('#bug-card-ap')).toBeHidden();
+    await expect(term).toHaveAttribute('data-state', 'done', { timeout: 20_000 });
+    await expect(page.locator('#bug-card-ap')).toBeVisible();
+    await expect(page.locator('#panel-ap')).toContainText('classified: app bug');
+  });
 
   test.describe('reduced motion', () => {
     test.use({ contextOptions: { reducedMotion: 'reduce' } });
