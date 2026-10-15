@@ -462,6 +462,29 @@
   .copy-status { color: var(--pass-ink); font-size: 14px; min-width: 6ch; }
   .contact-links { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 
+  /* Keywords highlighted inside running text (rendered from **word** in the I18N strings). */
+  .kw { font-weight: 600; color: var(--text); }
+
+  /* Phones: button groups stay on one line, the e-mail and its Copy button share one bar. */
+  @media (max-width: 599px) {
+    .hero .btn-row, .contact-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .featured .btn-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .hero .btn-row .btn, .featured .btn-row .btn, .contact-links .btn {
+      width: 100%; min-height: 44px; padding: 8px 6px; border-radius: 10px;
+      font-size: 13px; line-height: 1.25; text-align: center;
+    }
+    .contact-links li { display: flex; }
+    .email-row {
+      position: relative; flex-wrap: nowrap; justify-content: space-between; gap: 8px;
+      padding: 6px 6px 6px 14px; border: 1px solid var(--line); border-radius: 12px;
+      background: color-mix(in srgb, var(--bg) 55%, transparent);
+    }
+    .email { font-size: 14px; min-width: 0; }
+    .email-row .btn { flex: none; min-height: 40px; padding: 6px 14px; font-size: 13px; }
+    .copy-status { position: absolute; left: 14px; top: calc(100% + 6px); }
+    .contact-links { margin-top: 32px; }
+  }
+
   footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
   .badge { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); }
@@ -875,7 +898,7 @@
       'nav.about': 'About', 'nav.skills': 'Skills', 'nav.projects': 'Projects', 'nav.case': 'Case study', 'nav.experience': 'Experience', 'nav.contact': 'Contact',
       'theme.toLight': 'Switch to light theme', 'theme.toDark': 'Switch to dark theme',
       'hero.t1': 'I automate quality,', 'hero.t2': 'and I put AI to work doing it.',
-      'hero.sub': '9+ years in QA across web, mobile web and native apps. Playwright end to end, Appium on Android and iOS, AI agents that write test cases and triage failures, and two high-traffic, real-money betting platforms (sportsbook and casino) in production every day.',
+      'hero.sub': '**9+ years** in QA across web, mobile web and native apps. **Playwright** end to end, **Appium** on Android and iOS, **AI agents** that write test cases and triage failures, and two high-traffic, **real-money betting platforms** (sportsbook and casino) in production every day.',
       'hero.cta': 'View projects', cv: 'Download CV', 'hero.contact': 'Get in touch',
       'hero.avail': 'Open to remote roles · overlap with US/EU hours',
       'hero.meta': 'Três Pontas, Brazil · Remote · English (advanced)',
@@ -884,18 +907,18 @@
       replay: 'replay', tabsLabel: 'Terminal demos', stackLabel: 'Main stack',
       'impact.1n': '124 tests',
       'impact.1': 'across Chromium, Firefox and WebKit · CI in ~2.5 min',
-      'impact.2': 'to write the test cases for a feature, with AI agents and Playwright MCP',
+      'impact.2': 'to write the test cases for a feature, with AI agents and **Playwright MCP**',
       'impact.3': 'daily application checkups after automating the E2E regression',
-      'impact.4': 'manual mobile testing cycles per release with Maestro and Appium',
+      'impact.4': 'manual mobile testing cycles per release with **Maestro** and **Appium**',
       'about.title': 'Quality is a pipeline, not a phase.',
-      'about.p1': "I'm a Senior QA Automation Engineer with 9+ years in QA and 4+ years on international remote teams. Today I own quality end to end for Estrela Bet and Vupi, two high-traffic, real-money betting platforms (sportsbook and casino), across web, mobile web and native app: test strategy, infrastructure and reporting, with full autonomy over the QA stack.",
-      'about.p2': 'My focus is putting AI to work inside the QA flow: agents that map pages and draft Playwright tests, Claude Code skills that turn a feature description into test cases and bug reports, and automated triage that turns failures into Jira-ready defects. Always with a human reviewing before merge.',
-      'about.h1.t': 'Beyond the UI', 'about.h1.d': 'API testing with Postman, Proxyman and Swagger, and SQL queries to validate data straight in the database.',
-      'about.h2.t': 'End-to-end automation', 'about.h2.d': 'Sportsbook, live betting and casino flows on web and mobile with Playwright.',
-      'about.h3.t': 'AI in the QA flow', 'about.h3.d': 'Test generation and defect triage with Playwright MCP, Appium MCP and Claude Code.',
-      'about.h4.t': 'Mobile, hands on', 'about.h4.d': 'Manual and automated testing on iOS and Android, on physical devices and in the cloud with LambdaTest and BrowserStack. Appium + WebdriverIO, Maestro and XCUITest for automation.',
+      'about.p1': "I'm a **Senior QA Automation Engineer** with **9+ years** in QA and **4+ years** on international remote teams. Today I own quality end to end for **Estrela Bet** and **Vupi**, two high-traffic, real-money betting platforms (sportsbook and casino), across **web, mobile web and native app**: test strategy, infrastructure and reporting, with **full autonomy** over the QA stack.",
+      'about.p2': 'My focus is **putting AI to work inside the QA flow**: agents that map pages and draft Playwright tests, **Claude Code skills** that turn a feature description into test cases and bug reports, and automated triage that turns failures into **Jira-ready defects**. Always with **a human reviewing before merge**.',
+      'about.h1.t': 'Beyond the UI', 'about.h1.d': 'API testing with **Postman**, **Proxyman** and **Swagger**, and **SQL** queries to validate data straight in the database.',
+      'about.h2.t': 'End-to-end automation', 'about.h2.d': 'Sportsbook, live betting and casino flows on web and mobile with **Playwright**.',
+      'about.h3.t': 'AI in the QA flow', 'about.h3.d': 'Test generation and defect triage with **Playwright MCP**, **Appium MCP** and **Claude Code**.',
+      'about.h4.t': 'Mobile, hands on', 'about.h4.d': 'Manual and automated testing on iOS and Android, on physical devices and in the cloud with **LambdaTest** and **BrowserStack**. **Appium + WebdriverIO**, **Maestro** and **XCUITest** for automation.',
       'quality.title': 'This site is tested with Playwright',
-      'quality.text': 'Every push runs a Playwright suite on desktop and iPhone 12, axe-core WCAG A/AA checks in English and Portuguese, light and dark, and a Lighthouse CI audit.',
+      'quality.text': 'Every push runs a **Playwright suite** on desktop and iPhone 12, **axe-core WCAG A/AA** checks in English and Portuguese, light and dark, and a **Lighthouse CI** audit.',
       'quality.workflow': 'See the CI workflow', 'quality.tests': 'Read the tests',
       'skills.title': 'Toolbox', 'skills.primary': 'Primary', 'skills.also': 'Also experienced with',
       'skills.automation': 'Automation', 'skills.languages': 'Languages', 'skills.devices': 'Mobile devices',
@@ -904,22 +927,22 @@
       'skills.domains.1': 'iGaming and sports betting', 'skills.domains.2': 'mobile subscription apps', 'skills.domains.3': 'payments and in-app purchases', 'skills.domains.4': 'ad monetization',
       'skills.spoken': 'Languages (spoken)', 'skills.spoken.1': 'Portuguese (native)', 'skills.spoken.2': 'English (advanced)', 'skills.spoken.3': 'Spanish (basic)',
       'projects.title': 'Things I built', 'projects.intro': 'Public repos with CI running on GitHub Actions. They test public demo apps and APIs, because my production work is under NDA.',
-      'feat.desc': 'A production-style E2E suite against SauceDemo, extended with an AI-driven workflow: agents explore pages through Playwright MCP and draft Page Objects and specs, and a triage script turns failures into Jira-ready bug reports. Cross-browser, mobile emulation, accessibility, network resilience, performance budgets and Slack reporting.',
-      'feat.s1.t': 'Explore', 'feat.s1.d': 'Claude Code drives a real browser via Playwright MCP and writes a page map.',
-      'feat.s2.t': 'Generate', 'feat.s2.d': "Drafts a Page Object and spec in the repo's conventions, then runs lint, typecheck and the new test.",
-      'feat.s3.t': 'Run', 'feat.s3.d': 'Chromium, Firefox, WebKit and mobile projects in CI, with a11y and performance gates.',
-      'feat.s4.t': 'Triage', 'feat.s4.d': 'Failures are merged across browsers, classified, ranked by severity and written as Jira-ready drafts.',
+      'feat.desc': 'A production-style E2E suite against **SauceDemo**, extended with an AI-driven workflow: agents explore pages through **Playwright MCP** and draft **Page Objects** and specs, and a triage script turns failures into **Jira-ready bug reports**. **Cross-browser**, mobile emulation, **accessibility**, network resilience, **performance budgets** and Slack reporting.',
+      'feat.s1.t': 'Explore', 'feat.s1.d': 'Claude Code drives a real browser via **Playwright MCP** and writes a page map.',
+      'feat.s2.t': 'Generate', 'feat.s2.d': "Drafts a Page Object and spec in the repo's conventions, then runs **lint, typecheck** and the new test.",
+      'feat.s3.t': 'Run', 'feat.s3.d': 'Chromium, Firefox, WebKit and mobile projects in CI, with **a11y and performance gates**.',
+      'feat.s4.t': 'Triage', 'feat.s4.d': 'Failures are merged across browsers, classified, ranked by severity and written as **Jira-ready** drafts.',
       ghView: 'View on GitHub', 'feat.reports': 'See AI bug reports',
-      'maestro.desc': 'Mobile automation with Maestro, a CI pipeline on GitHub Actions with Slack reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the Claude API. Generated flows are reviewed and run before every commit.',
-      'cypress.desc': 'UI and API automation with Page Objects, cy.session, contract tests, network mocking, visual regression and k6 load profiles, with a parallel regression matrix on GitHub Actions.',
-      'appium.desc': "A cross-platform suite against Sauce Labs' My Demo App (React Native): one set of Screen Objects drives Android and iOS through shared accessibility ids. State is set with deep links instead of replaying the UI, and every test starts from a clean app. It goes past the happy path: gestures, NATIVE ↔ WEBVIEW switching, mocked GPS, background and screen-lock interruptions, and SauceDemo in the emulator's real Chrome (touch, on-screen keyboard, rotation).",
+      'maestro.desc': 'Mobile automation with **Maestro**, a CI pipeline on **GitHub Actions** with **Slack** reports, and a generator that turns a plain-language scenario into a runnable Maestro flow using the **Claude API**. Generated flows are reviewed and run before every commit.',
+      'cypress.desc': 'UI and API automation with **Page Objects**, **cy.session**, **contract tests**, network mocking, **visual regression** and **k6** load profiles, with a parallel regression matrix on GitHub Actions.',
+      'appium.desc': "A cross-platform suite against Sauce Labs' **My Demo App** (React Native): one set of **Screen Objects** drives **Android and iOS** through shared accessibility ids. State is set with **deep links** instead of replaying the UI, and every test starts from a clean app. It goes past the happy path: **gestures**, **NATIVE ↔ WEBVIEW** switching, **mocked GPS**, background and screen-lock interruptions, and SauceDemo in the emulator's **real Chrome** (touch, on-screen keyboard, rotation).",
       'appium.found': 'App bugs found and documented along the way: Add To Cart on deep-linked product pages adds an item with no price, payment errors vanish on submit, and the app crashes whenever Android recreates its activity.',
       'appium.result': '64 tests in 18 spec files · native app and mobile web on an Android API 34 emulator · smoke gate on every push, CI in about 4 min · iOS CI on the roadmap',
       'appium.allure': 'Open the Allure report',
-      'appium.s1.d': 'Claude Code reads the live screen through Appium MCP and writes a screen map.',
-      'appium.s2.d': 'Drafts a Screen Object and spec. The draft is committed untouched, and a script measures how much a human changed.',
-      'appium.s3.d': 'Smoke on every push on an Android emulator; failures carry a screenshot, page source and screen recording in Allure.',
-      'appium.s4.d': 'A skill reads logcat, page source and the Appium log, and classifies app bug, test bug or environment before drafting a bug.',
+      'appium.s1.d': 'Claude Code reads the live screen through **Appium MCP** and writes a screen map.',
+      'appium.s2.d': 'Drafts a **Screen Object** and spec. The draft is committed untouched, and a script measures how much a human changed.',
+      'appium.s3.d': 'Smoke on every push on an Android emulator; failures carry a screenshot, page source and screen recording in **Allure**.',
+      'appium.s4.d': 'A skill reads **logcat**, page source and the Appium log, and classifies app bug, test bug or environment before drafting a bug.',
       more: 'More repos', 'more.api': 'contract and security tests',
       'feat.result': '124 tests in 11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation · full run in about 2.5 min',
       'maestro.result': '10 Maestro flows on an Android emulator in CI',
@@ -931,19 +954,19 @@
       'ai.4': 'Run in CI', 'ai.5': 'Triage', 'ai.6': 'Jira-ready bug report',
       'case.context.t': 'Context', 'case.context.d': 'I own quality end to end for two betting brands, across web, mobile web and native app: sportsbook, live betting and casino flows.',
       'case.problem.t': 'Problem', 'case.problem.d': 'Test cases were written by hand for every new feature, on web, mobile web and native app.',
-      'case.approach.t': 'Approach', 'case.approach.d': "Claude Code skills turn a feature description into test cases and acceptance criteria. Agents map the pages through Playwright MCP and draft the Playwright tests, CI runs them, and failures are triaged into Jira-ready bug reports. Generated tests are drafts: a human reviews everything before merge, and anything the agent can't confirm is marked test.fixme instead of guessed.",
+      'case.approach.t': 'Approach', 'case.approach.d': "**Claude Code skills** turn a feature description into test cases and acceptance criteria. Agents map the pages through **Playwright MCP** and draft the Playwright tests, CI runs them, and failures are triaged into **Jira-ready bug reports**. Generated tests are drafts: **a human reviews everything before merge**, and anything the agent can't confirm is marked test.fixme instead of guessed.",
       'ai.excerpt': 'Excerpt from a Claude Code skill in my repo',
       'case.result.t': 'Result', 'case.result.d': 'to write the test cases for a feature.',
       'exp.title': "Where I've been testing", remote: 'Remote', current: 'Current', earlier: 'Earlier',
       'exp.1.when': 'Apr 2026 – Present', 'exp.2.when': 'Sep 2025 – May 2026', 'exp.3.when': 'Mar 2023 – Sep 2025', 'exp.4.when': 'May 2022 – Mar 2023',
       'exp.5.when': 'Jan 2022 – May 2022', 'exp.6.when': 'Sep 2020 – Jan 2022', 'exp.7.when': 'Jun 2017 – Jun 2019',
-      'exp.1.b1': 'Owns quality end to end for Estrela Bet and Vupi across web, mobile web and native app.',
-      'exp.1.b2': 'Cut the time to write the test cases for a feature from 2 hours to 5 minutes with an AI test generation workflow on Playwright MCP.',
-      'exp.1.b3': 'Cut daily checkups from 3 hours to under 30 minutes by automating the E2E regression across web and mobile.',
-      'exp.1.b4': 'Built a k6 pipeline that measures page-load metrics after every deploy and posts results to Slack.',
-      'exp.2.b1': 'First QA hired: built the QA process and cut manual mobile testing cycles by 50% per release with Maestro and Appium.',
-      'exp.3.b1': 'Part of a 3-person QA team covering 30+ apps with weekly releases; set a 95% pass-rate release gate and sustained 99% crash-free sessions.',
-      'exp.4.b1': 'First QA on a web scheduling platform for a major US client with no staging environment; cut production-breaking releases with Cypress E2E as a mandatory GitHub Actions deploy gate.',
+      'exp.1.b1': 'Owns quality end to end for **Estrela Bet** and **Vupi** across web, mobile web and native app.',
+      'exp.1.b2': 'Cut the time to write the test cases for a feature **from 2 hours to 5 minutes** with an AI test generation workflow on **Playwright MCP**.',
+      'exp.1.b3': 'Cut daily checkups **from 3 hours to under 30 minutes** by automating the E2E regression across web and mobile.',
+      'exp.1.b4': 'Built a **k6 pipeline** that measures page-load metrics after every deploy and posts results to **Slack**.',
+      'exp.2.b1': '**First QA hired**: built the QA process and cut manual mobile testing cycles **by 50%** per release with **Maestro and Appium**.',
+      'exp.3.b1': 'Part of a 3-person QA team covering **30+ apps** with weekly releases; set a **95% pass-rate release gate** and sustained **99% crash-free sessions**.',
+      'exp.4.b1': '**First QA** on a web scheduling platform for a major US client with no staging environment; cut production-breaking releases with **Cypress E2E** as a mandatory **GitHub Actions** deploy gate.',
       'edu.title': 'Education', edu: 'B.S. in Control and Automation Engineering',
       'contact.title': "Let's test something together.",
       'contact.text': 'Open to remote contract and full-time QA roles, comfortable with US and European time zones.',
@@ -956,7 +979,7 @@
       'nav.about': 'Sobre', 'nav.skills': 'Skills', 'nav.projects': 'Projetos', 'nav.case': 'Estudo de caso', 'nav.experience': 'Experiência', 'nav.contact': 'Contato',
       'theme.toLight': 'Mudar para o tema claro', 'theme.toDark': 'Mudar para o tema escuro',
       'hero.t1': 'Eu automatizo qualidade,', 'hero.t2': 'e coloco a IA pra trabalhar nisso.',
-      'hero.sub': '9+ anos em QA em web, mobile web e apps nativos. Playwright de ponta a ponta, Appium em Android e iOS, agentes de IA que escrevem casos de teste e fazem triagem de falhas, e duas plataformas de apostas com dinheiro real e alto tráfego (sportsbook e cassino) em produção todo dia.',
+      'hero.sub': '**9+ anos** em QA em web, mobile web e apps nativos. **Playwright** de ponta a ponta, **Appium** em Android e iOS, **agentes de IA** que escrevem casos de teste e fazem triagem de falhas, e duas **plataformas de apostas com dinheiro real** e alto tráfego (sportsbook e cassino) em produção todo dia.',
       'hero.cta': 'Ver projetos', cv: 'Baixar CV', 'hero.contact': 'Fale comigo',
       'hero.avail': 'Aberto a vagas remotas · sobreposição com horários dos EUA/Europa',
       'hero.meta': 'Três Pontas, MG · Remoto · Inglês avançado',
@@ -965,18 +988,18 @@
       replay: 'replay', tabsLabel: 'Demos de terminal', stackLabel: 'Stack principal',
       'impact.1n': '124 testes',
       'impact.1': 'em Chromium, Firefox e WebKit · CI em ~2,5 min',
-      'impact.2': 'para escrever os casos de teste de uma feature, com agentes de IA e Playwright MCP',
+      'impact.2': 'para escrever os casos de teste de uma feature, com agentes de IA e **Playwright MCP**',
       'impact.3': 'checkup diário da aplicação depois de automatizar a regressão E2E',
-      'impact.4': 'ciclos de teste manual mobile por release com Maestro e Appium',
+      'impact.4': 'ciclos de teste manual mobile por release com **Maestro** e **Appium**',
       'about.title': 'Qualidade é pipeline, não fase.',
-      'about.p1': 'Sou Senior QA Automation Engineer com 9+ anos em QA e 4+ anos em times remotos internacionais. Hoje sou responsável pela qualidade de ponta a ponta da Estrela Bet e da Vupi, duas plataformas de apostas com dinheiro real e alto tráfego (sportsbook e cassino), em web, mobile web e app nativo: estratégia de testes, infraestrutura e reporte, com autonomia total sobre a stack de QA.',
-      'about.p2': 'Meu foco é colocar a IA pra trabalhar dentro do fluxo de QA: agentes que mapeiam páginas e rascunham testes Playwright, skills do Claude Code que transformam uma descrição de feature em casos de teste e bug reports, e triagem automática que transforma falhas em defeitos prontos pro Jira. Sempre com revisão humana antes do merge.',
-      'about.h1.t': 'Além da interface', 'about.h1.d': 'Testes de API com Postman, Proxyman e Swagger, e consultas SQL pra validar dados direto no banco.',
-      'about.h2.t': 'Automação de ponta a ponta', 'about.h2.d': 'Fluxos de sportsbook, apostas ao vivo e cassino em web e mobile com Playwright.',
-      'about.h3.t': 'IA no fluxo de QA', 'about.h3.d': 'Geração de testes e triagem de defeitos com Playwright MCP, Appium MCP e Claude Code.',
-      'about.h4.t': 'Mobile na mão', 'about.h4.d': 'Testes manuais e automatizados em iOS e Android, em dispositivos físicos e na nuvem com LambdaTest e BrowserStack. Appium + WebdriverIO, Maestro e XCUITest na automação.',
+      'about.p1': 'Sou **Senior QA Automation Engineer** com **9+ anos** em QA e **4+ anos** em times remotos internacionais. Hoje sou responsável pela qualidade de ponta a ponta da **Estrela Bet** e da **Vupi**, duas plataformas de apostas com dinheiro real e alto tráfego (sportsbook e cassino), em **web, mobile web e app nativo**: estratégia de testes, infraestrutura e reporte, com **autonomia total** sobre a stack de QA.',
+      'about.p2': 'Meu foco é **colocar a IA pra trabalhar dentro do fluxo de QA**: agentes que mapeiam páginas e rascunham testes Playwright, **skills do Claude Code** que transformam uma descrição de feature em casos de teste e bug reports, e triagem automática que transforma falhas em **defeitos prontos pro Jira**. Sempre com **revisão humana antes do merge**.',
+      'about.h1.t': 'Além da interface', 'about.h1.d': 'Testes de API com **Postman**, **Proxyman** e **Swagger**, e consultas **SQL** pra validar dados direto no banco.',
+      'about.h2.t': 'Automação de ponta a ponta', 'about.h2.d': 'Fluxos de sportsbook, apostas ao vivo e cassino em web e mobile com **Playwright**.',
+      'about.h3.t': 'IA no fluxo de QA', 'about.h3.d': 'Geração de testes e triagem de defeitos com **Playwright MCP**, **Appium MCP** e **Claude Code**.',
+      'about.h4.t': 'Mobile na mão', 'about.h4.d': 'Testes manuais e automatizados em iOS e Android, em dispositivos físicos e na nuvem com **LambdaTest** e **BrowserStack**. **Appium + WebdriverIO**, **Maestro** e **XCUITest** na automação.',
       'quality.title': 'Este site é testado com Playwright',
-      'quality.text': 'Cada push roda uma suíte Playwright em desktop e iPhone 12, checagens axe-core WCAG A/AA em inglês e português, tema claro e escuro, e uma auditoria do Lighthouse CI.',
+      'quality.text': 'Cada push roda uma **suíte Playwright** em desktop e iPhone 12, checagens **axe-core WCAG A/AA** em inglês e português, tema claro e escuro, e uma auditoria do **Lighthouse CI**.',
       'quality.workflow': 'Ver o workflow de CI', 'quality.tests': 'Ler os testes',
       'skills.title': 'Caixa de ferramentas', 'skills.primary': 'Principais', 'skills.also': 'Também tenho experiência com',
       'skills.automation': 'Automação', 'skills.languages': 'Linguagens', 'skills.devices': 'Dispositivos mobile',
@@ -985,22 +1008,22 @@
       'skills.domains.1': 'iGaming e apostas esportivas', 'skills.domains.2': 'apps mobile de assinatura', 'skills.domains.3': 'pagamentos e compras in-app', 'skills.domains.4': 'monetização com anúncios',
       'skills.spoken': 'Idiomas', 'skills.spoken.1': 'Português (nativo)', 'skills.spoken.2': 'Inglês (avançado)', 'skills.spoken.3': 'Espanhol (básico)',
       'projects.title': 'O que eu construí', 'projects.intro': 'Repos públicos com CI rodando no GitHub Actions. Eles testam apps e APIs públicos de demonstração, porque meu trabalho de produção está sob NDA.',
-      'feat.desc': 'Uma suíte E2E no estilo de produção contra a SauceDemo, estendida com um fluxo de IA: agentes exploram as páginas via Playwright MCP e rascunham Page Objects e specs, e um script de triagem transforma falhas em bug reports prontos pro Jira. Cross-browser, emulação mobile, acessibilidade, resiliência de rede, budgets de performance e reporte no Slack.',
-      'feat.s1.t': 'Explorar', 'feat.s1.d': 'O Claude Code controla um browser real via Playwright MCP e escreve um mapa da página.',
-      'feat.s2.t': 'Gerar', 'feat.s2.d': 'Rascunha Page Object e spec nas convenções do repo e roda lint, typecheck e o teste novo.',
-      'feat.s3.t': 'Rodar', 'feat.s3.d': 'Projetos Chromium, Firefox, WebKit e mobile no CI, com gates de acessibilidade e performance.',
-      'feat.s4.t': 'Triar', 'feat.s4.d': 'Falhas são agrupadas entre browsers, classificadas, priorizadas por severidade e escritas como rascunhos prontos pro Jira.',
+      'feat.desc': 'Uma suíte E2E no estilo de produção contra a **SauceDemo**, estendida com um fluxo de IA: agentes exploram as páginas via **Playwright MCP** e rascunham **Page Objects** e specs, e um script de triagem transforma falhas em **bug reports prontos pro Jira**. **Cross-browser**, emulação mobile, **acessibilidade**, resiliência de rede, **budgets de performance** e reporte no Slack.',
+      'feat.s1.t': 'Explorar', 'feat.s1.d': 'O Claude Code controla um browser real via **Playwright MCP** e escreve um mapa da página.',
+      'feat.s2.t': 'Gerar', 'feat.s2.d': 'Rascunha Page Object e spec nas convenções do repo e roda **lint, typecheck** e o teste novo.',
+      'feat.s3.t': 'Rodar', 'feat.s3.d': 'Projetos Chromium, Firefox, WebKit e mobile no CI, com **gates de acessibilidade e performance**.',
+      'feat.s4.t': 'Triar', 'feat.s4.d': 'Falhas são agrupadas entre browsers, classificadas, priorizadas por severidade e escritas como rascunhos **prontos pro Jira**.',
       ghView: 'Ver no GitHub', 'feat.reports': 'Ver bug reports da IA',
-      'maestro.desc': 'Automação mobile com Maestro, pipeline de CI no GitHub Actions com reporte no Slack, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a Claude API. Os flows gerados são revisados e rodados antes de cada commit.',
-      'cypress.desc': 'Automação de UI e API com Page Objects, cy.session, testes de contrato, mock de rede, regressão visual e perfis de carga com k6, com matriz de regressão paralela no GitHub Actions.',
-      'appium.desc': 'Uma suíte cross-platform contra o My Demo App da Sauce Labs (React Native): um único conjunto de Screen Objects controla Android e iOS por accessibility ids compartilhados. O estado é montado por deep links em vez de repetir a UI, e cada teste começa com o app limpo. Vai além do caminho feliz: gestos, troca NATIVE ↔ WEBVIEW, GPS simulado, interrupções (segundo plano e tela bloqueada), e a SauceDemo no Chrome real do emulador (toque, teclado virtual, rotação).',
+      'maestro.desc': 'Automação mobile com **Maestro**, pipeline de CI no **GitHub Actions** com reporte no **Slack**, e um gerador que transforma um cenário em linguagem natural num flow Maestro executável usando a **Claude API**. Os flows gerados são revisados e rodados antes de cada commit.',
+      'cypress.desc': 'Automação de UI e API com **Page Objects**, **cy.session**, **testes de contrato**, mock de rede, **regressão visual** e perfis de carga com **k6**, com matriz de regressão paralela no GitHub Actions.',
+      'appium.desc': 'Uma suíte cross-platform contra o **My Demo App** da Sauce Labs (React Native): um único conjunto de **Screen Objects** controla **Android e iOS** por accessibility ids compartilhados. O estado é montado por **deep links** em vez de repetir a UI, e cada teste começa com o app limpo. Vai além do caminho feliz: **gestos**, troca **NATIVE ↔ WEBVIEW**, **GPS simulado**, interrupções (segundo plano e tela bloqueada), e a SauceDemo no **Chrome real** do emulador (toque, teclado virtual, rotação).',
       'appium.found': 'Bugs do app encontrados e documentados no caminho: o Add To Cart em páginas de produto abertas por deep link adiciona item sem preço, erros de pagamento somem ao enviar, e o app trava sempre que o Android recria a activity.',
       'appium.result': '64 testes em 18 arquivos de spec · app nativo e mobile web num emulador Android API 34 · gate de smoke a cada push, CI em cerca de 4 min · CI de iOS no roadmap',
       'appium.allure': 'Abrir o relatório Allure',
-      'appium.s1.d': 'O Claude Code lê a tela ao vivo via Appium MCP e escreve um mapa da tela.',
-      'appium.s2.d': 'Rascunha Screen Object e spec. O rascunho é commitado sem edição, e um script mede quanto uma pessoa mudou.',
-      'appium.s3.d': 'Smoke a cada push num emulador Android; falhas trazem screenshot, page source e gravação de tela no Allure.',
-      'appium.s4.d': 'Uma skill lê logcat, page source e o log do Appium, e classifica bug do app, bug de teste ou ambiente antes de rascunhar o bug.',
+      'appium.s1.d': 'O Claude Code lê a tela ao vivo via **Appium MCP** e escreve um mapa da tela.',
+      'appium.s2.d': 'Rascunha **Screen Object** e spec. O rascunho é commitado sem edição, e um script mede quanto uma pessoa mudou.',
+      'appium.s3.d': 'Smoke a cada push num emulador Android; falhas trazem screenshot, page source e gravação de tela no **Allure**.',
+      'appium.s4.d': 'Uma skill lê **logcat**, page source e o log do Appium, e classifica bug do app, bug de teste ou ambiente antes de rascunhar o bug.',
       more: 'Mais repos', 'more.api': 'testes de contrato e de segurança',
       'feat.result': '124 testes em 11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12 · execução completa em cerca de 2,5 min',
       'maestro.result': '10 flows Maestro num emulador Android no CI',
@@ -1012,19 +1035,19 @@
       'ai.4': 'Rodar no CI', 'ai.5': 'Triagem', 'ai.6': 'Bug report pronto pro Jira',
       'case.context.t': 'Contexto', 'case.context.d': 'Sou responsável pela qualidade de ponta a ponta de duas marcas de apostas, em web, mobile web e app nativo: fluxos de sportsbook, apostas ao vivo e cassino.',
       'case.problem.t': 'Problema', 'case.problem.d': 'Os casos de teste eram escritos à mão para cada feature nova, em web, mobile web e app nativo.',
-      'case.approach.t': 'Abordagem', 'case.approach.d': 'Skills do Claude Code transformam uma descrição de feature em casos de teste e critérios de aceite. Agentes mapeiam as páginas via Playwright MCP e rascunham os testes Playwright, o CI roda esses testes e as falhas viram bug reports prontos pro Jira. Testes gerados são rascunhos: uma pessoa revisa tudo antes do merge, e o que o agente não consegue confirmar vira test.fixme em vez de chute.',
+      'case.approach.t': 'Abordagem', 'case.approach.d': '**Skills do Claude Code** transformam uma descrição de feature em casos de teste e critérios de aceite. Agentes mapeiam as páginas via **Playwright MCP** e rascunham os testes Playwright, o CI roda esses testes e as falhas viram **bug reports prontos pro Jira**. Testes gerados são rascunhos: **uma pessoa revisa tudo antes do merge**, e o que o agente não consegue confirmar vira test.fixme em vez de chute.',
       'ai.excerpt': 'Trecho de uma skill do Claude Code no meu repo',
       'case.result.t': 'Resultado', 'case.result.d': 'para escrever os casos de teste de uma feature.',
       'exp.title': 'Onde eu tenho testado', remote: 'Remoto', current: 'Atual', earlier: 'Antes',
       'exp.1.when': 'abr 2026 – atual', 'exp.2.when': 'set 2025 – mai 2026', 'exp.3.when': 'mar 2023 – set 2025', 'exp.4.when': 'mai 2022 – mar 2023',
       'exp.5.when': 'jan 2022 – mai 2022', 'exp.6.when': 'set 2020 – jan 2022', 'exp.7.when': 'jun 2017 – jun 2019',
-      'exp.1.b1': 'Responsável pela qualidade de ponta a ponta da Estrela Bet e da Vupi em web, mobile web e app nativo.',
-      'exp.1.b2': 'Reduziu de 2 horas para 5 minutos o tempo de escrita dos casos de teste de uma feature, com um fluxo de geração por IA no Playwright MCP.',
-      'exp.1.b3': 'Reduziu o checkup diário de 3 horas para menos de 30 minutos automatizando a regressão E2E em web e mobile.',
-      'exp.1.b4': 'Criou uma pipeline k6 que mede métricas de carregamento a cada deploy e publica no Slack.',
-      'exp.2.b1': 'Primeiro QA contratado: criou o processo de QA e reduziu em 50% os ciclos de teste manual mobile por release com Maestro e Appium.',
-      'exp.3.b1': 'Parte de um time de 3 QAs cobrindo 30+ apps com releases semanais; definiu um gate de 95% de aprovação para release e manteve 99% de sessões sem crash.',
-      'exp.4.b1': 'Primeiro QA numa plataforma web de agendamento para um grande cliente dos EUA, sem ambiente de staging; reduziu releases que quebravam produção com testes E2E em Cypress como gate obrigatório de deploy no GitHub Actions.',
+      'exp.1.b1': 'Responsável pela qualidade de ponta a ponta da **Estrela Bet** e da **Vupi** em web, mobile web e app nativo.',
+      'exp.1.b2': 'Reduziu **de 2 horas para 5 minutos** o tempo de escrita dos casos de teste de uma feature, com um fluxo de geração por IA no **Playwright MCP**.',
+      'exp.1.b3': 'Reduziu o checkup diário **de 3 horas para menos de 30 minutos** automatizando a regressão E2E em web e mobile.',
+      'exp.1.b4': 'Criou uma **pipeline k6** que mede métricas de carregamento a cada deploy e publica no **Slack**.',
+      'exp.2.b1': '**Primeiro QA contratado**: criou o processo de QA e reduziu **em 50%** os ciclos de teste manual mobile por release com **Maestro e Appium**.',
+      'exp.3.b1': 'Parte de um time de 3 QAs cobrindo **30+ apps** com releases semanais; definiu um **gate de 95% de aprovação** para release e manteve **99% de sessões sem crash**.',
+      'exp.4.b1': '**Primeiro QA** numa plataforma web de agendamento para um grande cliente dos EUA, sem ambiente de staging; reduziu releases que quebravam produção com testes E2E em **Cypress** como gate obrigatório de deploy no **GitHub Actions**.',
       'edu.title': 'Formação', edu: 'Engenharia de Controle e Automação',
       'contact.title': 'Bora testar algo juntos.',
       'contact.text': 'Aberto a vagas remotas de QA, contrato ou CLT, com disponibilidade para fusos dos EUA e da Europa.',
@@ -1095,11 +1118,19 @@
     });
   }
 
+  // Strings may mark keywords as **word**; they render as <b class="kw">, built as nodes (no innerHTML).
+  function setText(el, text) {
+    el.textContent = '';
+    text.split('**').forEach(function (part, i) {
+      if (part) el.appendChild(i % 2 ? Object.assign(document.createElement('b'), { className: 'kw', textContent: part }) : document.createTextNode(part));
+    });
+  }
+
   function applyLang(next, persist) {
     lang = next;
     root.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
     renderSkills();
-    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { setText(el, t(el.getAttribute('data-i18n'))); });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { el.setAttribute('alt', t(el.getAttribute('data-i18n-alt'))); });
     document.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });

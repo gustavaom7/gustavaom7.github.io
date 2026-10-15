@@ -268,6 +268,40 @@ test.describe('portfolio', () => {
     await expect(page.locator('#experience').getByRole('heading', { name: 'Formação' })).toBeVisible();
   });
 
+  test('keywords render in bold in both languages, with no ** markers left on the page', async ({ page }) => {
+    await page.goto('/');
+    for (const lang of ['en', 'pt'] as const) {
+      await setLang(page, lang);
+      // The SKILL.md excerpt is Markdown source, so its ** is real content: skip code blocks.
+      const prose = await page.locator('body').evaluate((body) => {
+        const clone = body.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll('pre, script, style').forEach((c) => c.remove());
+        return clone.textContent ?? '';
+      });
+      expect(prose).not.toContain('**');
+      await expect(page.locator('#feat-appium .feat-desc b.kw').first()).toHaveText('My Demo App');
+      expect(await page.locator('main b.kw').count()).toBeGreaterThan(40);
+    }
+    await expect(page.locator('#about .prose b.kw', { hasText: 'Estrela Bet' })).toBeVisible();
+  });
+
+  test('on a phone, each button group sits on one line', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto('/');
+    for (const lang of ['en', 'pt'] as const) {
+      await setLang(page, lang);
+      for (const group of ['.hero .btn-row', '#feat-playwright .btn-row', '#feat-appium .btn-row', '.contact-links']) {
+        const tops = await page.locator(`${group} .btn`).evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+        expect(new Set(tops).size, `${group} (${lang})`).toBe(1);
+      }
+      const row = await page.locator('.email-row').evaluate((r) => {
+        const [email, copy] = [r.querySelector('.email')!, r.querySelector('#copy-email')!].map((e) => e.getBoundingClientRect());
+        return Math.abs(email.top + email.height / 2 - (copy.top + copy.height / 2));
+      });
+      expect(row, `e-mail and Copy share a line (${lang})`).toBeLessThan(4);
+    }
+  });
+
   test('no phone number anywhere on the page', async ({ page }) => {
     await page.goto('/');
     const html = await page.content();
