@@ -370,6 +370,7 @@
   @media (min-width: 880px) { .anchor-alias { scroll-margin-top: 80px; } }
   .nda { margin: -28px 0 32px; font-size: 14px; color: var(--muted); font-style: italic; }
   .steps { list-style: none; counter-reset: step; display: grid; gap: 12px; align-content: start; }
+  @media (min-width: 1000px) { .feat-grid > .steps { align-self: center; } }
   .steps li { counter-increment: step; position: relative; padding: 14px 16px 14px 56px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
   .steps li::before {
     content: "0" counter(step); position: absolute; left: 16px; top: 15px;
@@ -382,10 +383,12 @@
 
   .project-pair { display: grid; gap: 20px; margin-top: 28px; }
   @media (min-width: 880px) { .project-pair { grid-template-columns: 1fr 1fr; } }
-  .project { padding: 26px 24px; border-radius: 18px; transition: transform .2s; }
+  .project { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 24px; border-radius: 18px; transition: transform .2s; }
+  .project > p { align-self: stretch; }
   .project:hover { transform: translateY(-3px); }
   .project p { margin-top: 14px; color: var(--muted); }
-  .project .link { display: inline-block; margin-top: 16px; font-weight: 600; }
+  /* Pinned to the bottom so both cards' links line up whatever the text length. */
+  .project .link { display: inline-block; margin-top: auto; padding-top: 16px; font-weight: 600; }
   .more { margin-top: 28px; padding: 22px 24px; border-radius: 18px; border: 1px dashed var(--line); }
   .more h3 { font-size: 16px; margin-bottom: 12px; }
   .more ul { list-style: none; display: grid; gap: 10px; }
