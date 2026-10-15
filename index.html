@@ -409,8 +409,10 @@
   .flow small { display: block; color: var(--muted); font-size: 14px; }
   @media (min-width: 960px) {
     .flow { grid-template-columns: repeat(6, 1fr); gap: 16px; }
-    .flow li { padding: 44px 0 0; }
-    .flow li::after { left: 38px; right: -12px; top: 15px; bottom: auto; width: auto; height: 1px; background: linear-gradient(90deg, var(--pass), var(--violet)); }
+    /* Each step is centered in its column, so the strip is balanced on both sides. The line runs from one badge's edge to the next (gap 16px, badge 30px + 4px air). */
+    .flow li { padding: 44px 8px 0; text-align: center; }
+    .flow li::before { left: 50%; transform: translateX(-50%); }
+    .flow li::after { left: calc(50% + 19px); right: calc(-50% - 16px + 19px); top: 15px; bottom: auto; width: auto; height: 1px; background: linear-gradient(90deg, var(--pass), var(--violet)); }
   }
   .case-grid { display: grid; gap: 16px; margin-top: 40px; }
   .case-grid > div { min-width: 0; padding: 22px 24px; border-radius: 16px; }
