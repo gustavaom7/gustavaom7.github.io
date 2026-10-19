@@ -365,6 +365,24 @@ test.describe('portfolio', () => {
     await expect(appium.locator('.result')).toContainText('64 testes em 18 arquivos de spec');
   });
 
+  test('the LLM evaluation project leads the project cards, full width, with its report and real numbers', async ({ page }) => {
+    await page.goto('/');
+    const cards = page.locator('#projects .project-pair article.project');
+    await expect(cards.first()).toHaveId('llm-eval');
+    const llm = page.locator('#llm-eval');
+    await expect(llm.getByRole('heading', { level: 3 })).toContainText('LLM evaluation');
+    await expect(llm.locator('.tags li')).toHaveText(['Python', 'DeepEval', 'deepteam', 'Ollama']);
+    await expect(llm.locator('.result')).toContainText('5 recordings, 0 critical in 44 attacks, harmful answer found and documented');
+    await expect(llm.getByRole('link', { name: 'View on GitHub' })).toHaveAttribute('href', 'https://github.com/gustavaom7/llm-eval-qa');
+    await expect(llm.getByRole('link', { name: 'Open the eval report' })).toHaveAttribute('href', 'https://gustavaom7.github.io/llm-eval-qa/');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const pair = page.locator('#projects .project-pair');
+    expect((await llm.boundingBox())!.width).toBeGreaterThan((await pair.boundingBox())!.width * 0.95);
+    await setLang(page, 'pt');
+    await expect(llm.getByRole('link', { name: 'Abrir o relatório da avaliação' })).toBeVisible();
+    await expect(llm.locator('.result')).toContainText('5 gravações, 0 críticos em 44 ataques');
+  });
+
   test('terminal tabs switch between the Playwright and Appium demos, by click and by keyboard', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');

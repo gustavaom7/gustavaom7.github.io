@@ -383,6 +383,7 @@
 
   .project-pair { display: grid; gap: 20px; margin-top: 28px; }
   @media (min-width: 880px) { .project-pair { grid-template-columns: 1fr 1fr; } }
+  .project-pair .wide { grid-column: 1 / -1; }
   .project { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 24px; border-radius: 18px; transition: transform .2s; }
   .project > p { align-self: stretch; }
   .project:hover { transform: translateY(-3px); }
@@ -692,6 +693,17 @@
       </div>
 
       <div class="project-pair">
+        <article class="project card wide reveal" id="llm-eval" aria-labelledby="llm-title">
+          <h3 id="llm-title">LLM evaluation pipeline for a RAG support bot</h3>
+          <ul class="tags"><li>Python</li><li>DeepEval</li><li>deepteam</li><li>Ollama</li></ul>
+          <p data-i18n="llm.desc">Testing an LLM product, not just using AI to write tests. A retrieval-augmented support bot is evaluated in layers: deterministic gates first, a DeepEval judge second, and a fixed red-team set of 44 attacks third. Critical failures (money promised, personal data, a leaked prompt) are caught by code, never by the judge. Everything runs on local models with Ollama at zero cost, and CI replays recorded answers.</p>
+          <!-- Numbers from docs/findings.md in llm-eval-qa (Record runs 1–6, Oct 2026). Update when a new recording changes them. -->
+          <p class="result" data-i18n="llm.result">5 recordings, 0 critical in 44 attacks, harmful answer found and documented</p>
+          <div class="btn-row">
+            <a class="link" href="https://github.com/gustavaom7/llm-eval-qa" target="_blank" rel="noopener" data-i18n="ghView">View on GitHub</a>
+            <a class="link" href="https://gustavaom7.github.io/llm-eval-qa/" target="_blank" rel="noopener" data-i18n="llm.report">Open the eval report</a>
+          </div>
+        </article>
         <article class="project card reveal" aria-labelledby="maestro-title">
           <h3 id="maestro-title">Maestro mobile + AI test generator</h3>
           <ul class="tags"><li>Maestro</li><li>Python</li><li>Claude API</li><li>GitHub Actions</li></ul>
@@ -956,6 +968,9 @@
       more: 'More repos', 'more.api': 'contract and input-handling tests',
       'feat.result': '124 tests in 11 spec files · Chromium, Firefox and WebKit, plus Pixel 5 and iPhone 12 emulation · full run in about 2.5 min',
       'maestro.result': '10 Maestro flows on an Android emulator in CI',
+      'llm.desc': 'Testing an LLM product, not just using AI to write tests. A **retrieval-augmented** support bot is evaluated in layers: **deterministic gates** first, a **DeepEval** judge second, and a fixed **red-team** set of 44 attacks third. Critical failures (money promised, personal data, a leaked prompt) are caught by code, never by the judge. Everything runs on local models with **Ollama** at zero cost, and CI **replays recorded answers**.',
+      'llm.result': '5 recordings, 0 critical in 44 attacks, harmful answer found and documented',
+      'llm.report': 'Open the eval report',
       'cypress.result': '11 spec files across UI, API, visual and Lighthouse · smoke on desktop and mobile viewports in parallel · full CI in about 4.5 min',
       'case.title': 'Case study: AI in the QA flow',
       'case.intro': 'Not a prompt collection: a pipeline I use every day on two betting platforms, with a human reviewing at the end.',
@@ -1037,6 +1052,9 @@
       more: 'Mais repos', 'more.api': 'testes de contrato e de tratamento de entrada',
       'feat.result': '124 testes em 11 arquivos de spec · Chromium, Firefox e WebKit, mais emulação de Pixel 5 e iPhone 12 · execução completa em cerca de 2,5 min',
       'maestro.result': '10 flows Maestro num emulador Android no CI',
+      'llm.desc': 'Testar um produto de LLM, não só usar IA pra escrever testes. Um bot de suporte com **RAG** é avaliado em camadas: primeiro **gates determinísticos**, depois um juiz **DeepEval**, e por fim um conjunto fixo de **red-team** com 44 ataques. Falhas críticas (promessa de dinheiro, dado pessoal, prompt vazado) são detectadas por código, nunca pelo juiz. Tudo roda em modelos locais com **Ollama**, a custo zero, e o CI **reproduz respostas gravadas**.',
+      'llm.result': '5 gravações, 0 críticos em 44 ataques, resposta nociva encontrada e documentada',
+      'llm.report': 'Abrir o relatório da avaliação',
       'cypress.result': '11 arquivos de spec entre UI, API, visual e Lighthouse · smoke em viewports desktop e mobile em paralelo · CI completo em cerca de 4,5 min',
       'case.title': 'Estudo de caso: IA no fluxo de QA',
       'case.intro': 'Não é coleção de prompt: é uma pipeline que eu uso todo dia em duas plataformas de apostas, com revisão humana no fim.',
